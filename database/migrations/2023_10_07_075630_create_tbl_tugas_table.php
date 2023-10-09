@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('tbl_tugas', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->foreignUuid('role_id');
-            $table->rememberToken();
+            $table->unsignedBigInteger('id_guru')->constrained();
+            $table->longText('tugas');
+            $table->longText('file_upload_tugas');
+            $table->unsignedBigInteger('id_mapel_library')->constrained();
+            $table->unsignedBigInteger('id_kelas')->constrained();
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('tbl_tugas');
     }
 };
