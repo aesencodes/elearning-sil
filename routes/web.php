@@ -16,9 +16,9 @@ use App\Http\Controllers\Teacher\DashboardController as TeacherDashboardControll
 |
 */
 
-Route::get('/', function () {
-    return view('pages.auth.login');
-})->name('login');
+//Route::get('/', function () {
+//    return view('pages.auth.login');
+//})->name('login');
 
 //Route::post('auth', [LoginController::class, 'auth'])->name('auth');
 //Route::post('logout', [LoginController::class, 'logout'])->name('logout');
@@ -27,13 +27,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('home');
 });
 
-
 // Testing
 Route::get('/dummyCreataData',  [LoginController::class, 'createDataDummy']);
-Route::get('/login',            [LoginController::class, 'viewLogin'])->name('login.view');
 Route::get('/logout',           [LoginController::class, 'logout'])->name('logout.view');
-Route::post('/post/login',      [LoginController::class, 'loginProcess'])->name('login.post');
 
+Route::post('/post/login',      [LoginController::class, 'loginProcess'])->name('login.post');
+Route::get('/',                 [LoginController::class, 'viewLogin'])->name('login.view');
 
 Route::prefix('dashboard')->group(function () {
     Route::middleware(['isStudent'])->group(function () {

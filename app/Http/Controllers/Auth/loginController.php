@@ -53,10 +53,12 @@ class loginController extends Controller
         ]);
     }
 
-    function viewLogin(): View|string{
+    function viewLogin(): RedirectResponse|string|View
+    {
         if (!Auth::check()) {
             return view('pages.auth.login');
-        } return print_r("anda sudah login mas");
+        }
+        return $this->accessRoute();
     }
 
     function loginProcess(Request $req): bool|String|RedirectResponse{
