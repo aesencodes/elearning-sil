@@ -20,12 +20,13 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Welcome Back</h3></div>
                                     <div class="card-body">
-                                        <form method="POST" action="{{ route('auth') }}">
+                                        <form method="POST" action="{{ route('login.post') }}">
                                             @csrf
-                                            @include('sweetalert::alert')
+                                            @if (session('error'))
+                                            @endif
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputUsername" type="text" placeholder="Username" name="username"/>
-                                                <label for="inputEmail">Username</label>
+                                                <input class="form-control" id="inputEmail" type="text" placeholder="Email" name="email"/>
+                                                <label for="inputEmail">Email</label>
                                             </div>
                                             <div class="form-floating mb-3">
                                                 <input class="form-control" id="inputPassword" type="password" placeholder="Password" name="password"/>
@@ -46,6 +47,6 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
+        <script src="{{ asset('js/scripts.js') }}"></script>
     </body>
 </html>

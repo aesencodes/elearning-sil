@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class loginController extends Controller
 {
@@ -54,7 +55,7 @@ class loginController extends Controller
 
     function viewLogin(): View|string{
         if (!Auth::check()) {
-            return view('Auth.login');
+            return view('pages.auth.login');
         } return print_r("anda sudah login mas");
     }
 
@@ -96,6 +97,6 @@ class loginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return true;
+        return redirect()->route('login.view');
     }
 }

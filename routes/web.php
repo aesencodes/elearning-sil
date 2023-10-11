@@ -31,7 +31,7 @@ Route::middleware(['auth'])->group(function () {
 // Testing
 Route::get('/dummyCreataData',  [LoginController::class, 'createDataDummy']);
 Route::get('/login',            [LoginController::class, 'viewLogin'])->name('login.view');
-Route::get('/logout',           [LoginController::class, 'logout'])->name('login.view');
+Route::get('/logout',           [LoginController::class, 'logout'])->name('logout.view');
 Route::post('/post/login',      [LoginController::class, 'loginProcess'])->name('login.post');
 
 

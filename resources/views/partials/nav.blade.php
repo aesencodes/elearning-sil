@@ -18,10 +18,7 @@
                 <li><a class="dropdown-item" href="#!">Settings</a></li>
                 <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                 <li><hr class="dropdown-divider" /></li>
-                <form action="{{ url('/logout') }}" method="POST">
-                <li><button class="dropdown-item" action="submit"> Logout</button></li>
-                    @csrf
-                </form>
+                <li><a class="dropdown-item" href="{{ route('logout.view') }}">Logout</a></li>
             </ul>
         </li>
     </ul>
