@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('tbl_gurus', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->integer('nuptk')->unique();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignUuid('user_id');
             $table->string('name');
-            $table->unsignedBigInteger('gander_id');
-            $table->integer('nomor_hp');
+            $table->unsignedBigInteger('gander_id')->nullable();
+            $table->integer('nomor_hp')->nullable();
             $table->timestamps();
         });
     }

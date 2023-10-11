@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\tbl_guru;
 use App\Models\tbl_siswa;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -10,25 +11,45 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
-use PHPUnit\Event\Code\Throwable;
 
 class loginController extends Controller
 {
     // Dummy Data
     function createDataDummy(): bool {
+
+        $this->insertDataSiswaw();
+        $this->insertDataGuru();
+
+        return true;
+    }
+
+    private function insertDataSiswaw() {
         $user = New User();
-        $user->email = 'email@gmail.com';
+        $user->email = 'siswa@gmail.com';
         $user->password = Hash::make('123123123');
         $user->role_id = 199200;
         $user->save();
 
-        $siswa =  tbl_siswa::create([
+        tbl_siswa::create([
             'user_id' => $user->id,
             'nis'   => 12312312,
-            'name'  => 'nest',
+            'name'  => 'Nama Siswa',
         ]);
+    }
 
-        return true;
+    private function insertDataGuru() {
+        // Teacher
+        $guru = New User();
+        $guru->email = 'guru@gmail.com';
+        $guru->password = Hash::make('112233');
+        $guru->role_id = 199300;
+        $guru->save();
+
+        tbl_guru::create([
+            'user_id' => $guru->id,
+            'nuptk'   => 12312312,
+            'name'  => 'Nama Guru',
+        ]);
     }
 
     function viewLogin(): View|string{
@@ -37,14 +58,13 @@ class loginController extends Controller
         } return print_r("anda sudah login mas");
     }
 
-    function loginProcess(Request $req): object|bool|String{
+    function loginProcess(Request $req): bool|String|RedirectResponse{
+        $credential = $req->validate([
+            'email'     => 'required',
+            'password'  => 'required'
+        ]);
 
         if (!Auth::check()){
-            $credential = $req->validate([
-                'email'     => 'required',
-                'password'  => 'required'
-            ]);
-
             if (User::where('email', $req->email)->count() > 0){
                 if (Auth::attempt($req->except(['_token', '_method']))){
                     // Security for random id session
@@ -53,16 +73,16 @@ class loginController extends Controller
                     // Access Route Redirect
                     return $this->accessRoute();
 
-                } return print_r('Silakan Periksa Password Anda!!!');
-            } return print_r('Email Tidak Tersedia');
+                } return back()->with('error', 'Password Salah');
+            } return back()->with('error', 'Email Tidak Tersedia');
         } return print_r("Anda sudah login Hey!!!");
     }
 
     // Return Type Function : View or Response
-    private function accessRoute(): string {
+    private function accessRoute(): string|RedirectResponse {
         $access = match (Auth::user()->role_id) {
-            '199200' => print_r("Access for Student", true),
-            '199300' => print_r("Access for Teacher", true),
+            '199200' => redirect()->route('student.dashboard'),
+            '199300' => redirect()->route('teacher.dashboard'),
             '999999' => print_r("Access for Admin", true),
         };
 

@@ -19,8 +19,10 @@ class tbl_guru extends Model
         'nomor_hp',
     ];
 
-    //  Relations
+    protected $keyType = 'string';
+    public $incrementing = false;
 
+    //  Relations
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
     }

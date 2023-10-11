@@ -8,10 +8,21 @@
     <title>Document</title>
 </head>
 <body>
+    @if (session('error'))
+        <div class="alert alert-success">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    <br>
+
     <form action="{{ route('login.post') }}" method="post">
         @csrf
         <input type="email" name="email" value="email@gmail.com"> <br>
+        @error('email') <p>Email Wajib Diisi</p> @enderror
         <input type="password" name="password" value="123123123"> <br>
+        @error('password') <p>Email Wajib Diisi</p> @enderror
+
         <input type="submit" value="login">
     </form>
 </body>

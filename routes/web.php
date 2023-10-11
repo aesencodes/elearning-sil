@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\loginController;
-
+use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
+use App\Http\Controllers\Teacher\DashboardController as TeacherDashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,3 +33,14 @@ Route::get('/dummyCreataData',  [LoginController::class, 'createDataDummy']);
 Route::get('/login',            [LoginController::class, 'viewLogin'])->name('login.view');
 Route::get('/logout',           [LoginController::class, 'logout'])->name('login.view');
 Route::post('/post/login',      [LoginController::class, 'loginProcess'])->name('login.post');
+
+
+Route::prefix('dashboard')->group(function () {
+    Route::middleware(['isStudent'])->group(function () {
+        Route::get('/student', [StudentDashboardController::class, 'viewDashboard'])->name('student.dashboard');
+    });
+
+    Route::middleware(['isTeacher'])->group(function () {
+        Route::get('/teacher', [TeacherDashboardController::class, 'viewDashboard'])->name('teacher.dashboard');
+    });
+});
