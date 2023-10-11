@@ -66,7 +66,7 @@ class loginController extends Controller
 
         if (!Auth::check()){
             if (User::where('email', $req->email)->count() > 0){
-                if (Auth::attempt($req->except(['_token', '_method']))){
+                if (Auth::attempt($req->only(['email', 'password']))){
                     // Security for random id session
                     $req->session()->regenerate();
 
