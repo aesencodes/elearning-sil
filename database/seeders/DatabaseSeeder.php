@@ -4,8 +4,6 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Foundation\Auth\User;
-use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,10 +19,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        \App\Models\User::create([
-            'name' => 'Admin',
-            'username' => 'root',
-            'password' => Hash::make('admin'),
-        ]);
+        $this->call(set_category::class);
+        $this->call(SetLibrarySeeder::class);
     }
 }

@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('tbl_gurus', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->foreignUuid('role_id');
-            $table->rememberToken();
+            $table->integer('nuptk')->unique();
+            $table->foreignUuid('user_id');
+            $table->string('name');
+            $table->unsignedBigInteger('gander_id')->nullable();
+            $table->integer('nomor_hp')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('tbl_gurus');
     }
 };
