@@ -58,10 +58,27 @@
                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                 Tables
             </a>
+            @if (Auth::User()->role_id == 999999) <!-- ADMIN -->
+            <div class="sb-sidenav-menu-heading">User Management</div>
+            <a class="nav-link" href="index.html">
+                <div class="sb-nav-link-icon"><i class="fas fa-chalkboard-user"></i></div>
+                Teachers
+            </a>
+            <a class="nav-link" href="index.html">
+                <div class="sb-nav-link-icon"><i class="fas fa-children"></i></div>
+                Students
+            </a>
+            @endif
         </div>
     </div>
     <div class="sb-sidenav-footer">
         <div class="small">Logged in as:</div>
-        {{ auth()->user()->username }}
+        @if (Auth::User()->role_id == 199300)
+        {{ Auth::User()->guru->name }}
+        @elseif(Auth::User()->role_id == 199200)
+        {{ Auth::User()->siswa->name }}
+        @elseif(Auth::User()->role_id == 999999)
+        <p>admin nih bos</p>
+        @endif
     </div>
 </nav>

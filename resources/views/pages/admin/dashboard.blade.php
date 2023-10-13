@@ -1,7 +1,7 @@
 @extends('layouts.default')
 @section('content')
 
-    <h1 class="mt-4">Welcome, Teacher {{ Auth::User()->guru->name }}</h1>
+    <h1 class="mt-4">Welcome, Admin</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item active">Dashboard</li>
     </ol>

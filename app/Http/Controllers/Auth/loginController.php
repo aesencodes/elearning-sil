@@ -20,6 +20,11 @@ class loginController extends Controller
 
         $this->insertDataSiswaw();
         $this->insertDataGuru();
+        $user = New User();
+        $user->email = 'asd@gmail.com';
+        $user->password = Hash::make('asd');
+        $user->role_id = 999999;
+        $user->save();
 
         return true;
     }
@@ -86,7 +91,7 @@ class loginController extends Controller
         $access = match (Auth::user()->role_id) {
             '199200' => redirect()->route('student.dashboard'),
             '199300' => redirect()->route('teacher.dashboard'),
-            '999999' => print_r("Access for Admin", true),
+            '999999' => redirect()->route('admin.dashboard'),
         };
 
         return $access;
