@@ -6,9 +6,12 @@
     </ol>
     <div class="row">
         <div class="card mb-4">
-            <div class="card-header">
-                <i class="fas fa-table me-1"></i>
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center">
+              <i class="fas fa-table me-1"></i>
                 Teachers
+              </div>
+                <a href="{{ route('admin.teacher.create') }}" class="btn btn-primary btn-sm">Add new Teacher</a>
             </div>
             <div class="card-body">
                 <table class="table">

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class TeacherController extends Controller
 {
@@ -20,7 +21,7 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.admin.teacher.create');
     }
 
     /**
@@ -28,7 +29,24 @@ class TeacherController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $valid = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'nuptk' => 'required|numeric',
+            'password' => 'required|string|min:8'
+        ]);
+
+        $guru = New User();
+        $guru->email = $valid['email'];
+        $guru->password = Hash::make($valid['password']);
+        $guru->role_id = 199300;
+        $guru->save();
+
+        tbl_guru::create([
+            'user_id' => $guru->id,
+            'nuptk'   => $valid['nuptk'],
+            'name'  => $valid['name'],
+        ]);
     }
 
     /**
