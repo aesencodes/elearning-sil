@@ -60,7 +60,7 @@
             </a>
             @if (Auth::User()->role_id == 999999) <!-- ADMIN -->
             <div class="sb-sidenav-menu-heading">User Management</div>
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="{{ route('admin.teacher') }}">
                 <div class="sb-nav-link-icon"><i class="fas fa-chalkboard-user"></i></div>
                 Teachers
             </a>

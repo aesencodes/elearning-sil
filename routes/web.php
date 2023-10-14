@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\loginController;
+use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
 use App\Http\Controllers\Teacher\DashboardController as TeacherDashboardController;
@@ -45,6 +46,9 @@ Route::prefix('dashboard')->group(function () {
     });
 
     Route::middleware(['isAdmin'])->group(function () {
-        Route::get('/admin', [AdminDashboardController::class, 'viewDashboard'])->name('admin.dashboard');
+        Route::prefix('admin')->group(function () {
+            Route::get('/', [AdminDashboardController::class, 'viewDashboard'])->name('admin.dashboard');
+            Route::get('/teacher', [TeacherController::class, 'index'])->name('admin.teacher');
+        });
     });
 });
