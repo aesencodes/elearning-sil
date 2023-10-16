@@ -51,6 +51,7 @@ Route::prefix('dashboard')->group(function () {
             Route::get('/teacher', [TeacherController::class, 'index'])->name('admin.teacher');
             Route::get('/teacher/create', [TeacherController::class, 'create'])->name('admin.teacher.create');
             Route::post('/teacher/store', [TeacherController::class, 'store'])->name('admin.teacher.store');
+            Route::post('/teacher/destroy/{$id}', [TeacherController::class, 'destroy'])->name('admin.teacher.destroy');
         });
     });
 });

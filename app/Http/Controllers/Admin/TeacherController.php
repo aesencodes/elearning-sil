@@ -15,7 +15,16 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        return view('pages.admin.teacher.teacher');
+        $teacher = tbl_guru::all();
+        $counter = 1;
+
+        foreach($teacher as $id){
+            $id -> seq_id = $counter++;
+        }
+
+        return view('pages.admin.teacher.teacher', [
+            'teacher' => $teacher
+        ]);
     }
 
     /**
@@ -49,6 +58,7 @@ class TeacherController extends Controller
             'nuptk'   => $valid['nuptk'],
             'name'  => $valid['name'],
         ]);
+        return redirect()->intended(route('admin.teacher'));
     }
 
     /**
@@ -80,6 +90,7 @@ class TeacherController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $teacher = tbl_guru::findOrFail($id);
+        $teacher->delete();
     }
 }

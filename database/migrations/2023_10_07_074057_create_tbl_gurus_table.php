@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tbl_gurus', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->integer('nuptk')->unique();
+            $table->decimal('nuptk', 16, 0)->unique();
             $table->foreignUuid('user_id');
             $table->string('name');
             $table->unsignedBigInteger('gander_id')->nullable();
