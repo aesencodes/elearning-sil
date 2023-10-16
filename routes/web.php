@@ -50,7 +50,7 @@ Route::prefix('dashboard')->group(function () {
             Route::get('/', [AdminDashboardController::class, 'viewDashboard'])->name('admin.dashboard');
             Route::get('/teacher', [TeacherController::class, 'index'])->name('admin.teacher');
             Route::get('/teacher/create', [TeacherController::class, 'create'])->name('admin.teacher.create');
-            Route::get('/teacher/store', [TeacherController::class, 'store'])->name('admin.teacher.store');
+            Route::post('/teacher/store', [TeacherController::class, 'store'])->name('admin.teacher.store');
         });
     });
 });
