@@ -51,7 +51,9 @@ Route::prefix('dashboard')->group(function () {
             Route::get('/teacher', [TeacherController::class, 'index'])->name('admin.teacher');
             Route::get('/teacher/create', [TeacherController::class, 'create'])->name('admin.teacher.create');
             Route::post('/teacher/store', [TeacherController::class, 'store'])->name('admin.teacher.store');
-            Route::post('/teacher/destroy/{$id}', [TeacherController::class, 'destroy'])->name('admin.teacher.destroy');
+            Route::get('/teacher/edit/{user_id}', [TeacherController::class, 'edit'])->name('admin.teacher.edit');
+            Route::put('/teacher/update/{user_id}', [TeacherController::class, 'update'])->name('admin.teacher.update');
+            Route::delete('/teacher/destroy/{user_id}', [TeacherController::class, 'destroy'])->name('admin.teacher.destroy');
         });
     });
 });

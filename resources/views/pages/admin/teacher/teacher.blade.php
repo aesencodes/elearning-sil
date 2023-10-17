@@ -32,8 +32,8 @@
                                 <td class="col-3">{{ $item->nuptk }}</td>
                                 <td class="col-4">{{ $item->name }}</td>
                                 <td class="col-2">
-                                    <a href="" class="btn btn-warning btn-sm mb-1">Edit</a>
-                                    <a href="{{ route('pages.admin.teacher.destroy') }} / {{ $item->id }}" class="btn btn-danger btn-sm mb-1">Delete</a>
+                                    <a href="{{ route('admin.teacher.edit', $item->id) }}" class="btn btn-warning btn-sm mb-1">Edit</a>
+                                    <a href="{{ route('admin.teacher.destroy', $item->id) }}" class="btn btn-danger btn-sm mb-1">Delete</a>
                                 </td>
                             </tr>
                         @endforeach

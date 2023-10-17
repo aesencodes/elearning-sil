@@ -74,7 +74,13 @@ class TeacherController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $teacher = tbl_guru::findOrFail($id);
+        $email = User::findOrFail($teacher->user_id);
+
+        return view('pages.admin.teacher.edit', [
+            'teacher' => $teacher,
+            'email' => $email->email
+        ]);
     }
 
     /**
@@ -82,8 +88,24 @@ class TeacherController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
-    }
+            $valid = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|max:255',
+                'nuptk' => 'required|numeric'
+            ]);
+        
+            $teacher = tbl_guru::findOrFail($id);
+        
+            $user = User::findOrFail($teacher->user_id);
+            $user->email = $valid['email'];
+            $user->save();
+        
+            $teacher->nuptk = $valid['nuptk'];
+            $teacher->name = $valid['name'];
+            $teacher->save();
+        
+            return redirect()->intended(route('admin.teacher'));
+        }
 
     /**
      * Remove the specified resource from storage.
@@ -91,6 +113,12 @@ class TeacherController extends Controller
     public function destroy(string $id)
     {
         $teacher = tbl_guru::findOrFail($id);
+        $user_id = $teacher->user_id;
+        $user = User::findOrFail($user_id);
+
         $teacher->delete();
+        $user->delete();
+
+        return redirect()->intended(route('admin.teacher'));
     }
 }
