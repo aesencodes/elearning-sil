@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\loginController;
+use App\Http\Controllers\Admin\TeacherController;
+use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
 use App\Http\Controllers\Teacher\DashboardController as TeacherDashboardController;
 /*
@@ -46,5 +49,29 @@ Route::prefix('dashboard')->group(function () {
 
     Route::middleware(['isTeacher'])->group(function () {
         Route::get('/teacher', [TeacherDashboardController::class, 'viewDashboard'])->name('teacher.dashboard');
+    });
+
+    Route::middleware(['isAdmin'])->group(function () {
+        Route::prefix('admin')->group(function () {
+            
+            Route::get('/', [AdminDashboardController::class, 'viewDashboard'])->name('admin.dashboard');
+
+            Route::prefix('teacher')->group(function () {
+                Route::get('/teacher', [TeacherController::class, 'index'])->name('admin.teacher');
+                Route::get('/teacher/create', [TeacherController::class, 'create'])->name('admin.teacher.create');
+                Route::post('/teacher/store', [TeacherController::class, 'store'])->name('admin.teacher.store');
+                Route::get('/teacher/edit/{user_id}', [TeacherController::class, 'edit'])->name('admin.teacher.edit');
+                Route::put('/teacher/update/{user_id}', [TeacherController::class, 'update'])->name('admin.teacher.update');
+                Route::delete('/teacher/destroy/{user_id}', [TeacherController::class, 'destroy'])->name('admin.teacher.destroy');
+            });
+            Route::prefix('student')->group(function () {
+                Route::get('/student', [StudentController::class, 'index'])->name('admin.student');
+                Route::get('/student/create', [StudentController::class, 'create'])->name('admin.student.create');
+                Route::post('/student/store', [StudentController::class, 'store'])->name('admin.student.store');
+                Route::get('/student/edit/{user_id}', [StudentController::class, 'edit'])->name('admin.student.edit');
+                Route::put('/student/update/{user_id}', [StudentController::class, 'update'])->name('admin.student.update');
+                Route::delete('/student/destroy/{user_id}', [StudentController::class, 'destroy'])->name('admin.student.destroy');    
+            });
+        });
     });
 });
