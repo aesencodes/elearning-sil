@@ -1,6 +1,6 @@
 @extends('layouts.default')
 @section('content')
-    <h1 class="mt-4">Teacher Management</h1>
+    <h1 class="mt-4">Student Management</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item active">Dashboard</li>
     </ol>
