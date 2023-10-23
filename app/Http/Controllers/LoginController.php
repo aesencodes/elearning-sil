@@ -16,19 +16,19 @@ class LoginController extends Controller
         $auth = $request->username;
         $password = $request->password;
         $checkUser = User::where('username', $auth)->first();
-   
+
             if($checkUser != null){
-           
+
                     $credentials = ([
                         'username' => $auth,
                         'password' => $password,
                     ]);
 
-                    
+
                     if (Auth::attempt($credentials)) {
                             return redirect()->route('home');
                     }
-        
+
             }elseif ($checkUser == null ){
                 Alert::error('Failed', 'Gagal login');
                 return redirect()->back();
@@ -38,7 +38,7 @@ class LoginController extends Controller
     public function logout()
     {
         Session::flush();
-        
+
         Auth::logout();
 
         return redirect()->route('login');

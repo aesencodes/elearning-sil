@@ -54,9 +54,11 @@ class User extends Authenticatable
     public function siswa() {
         return $this->hasOne(tbl_siswa::class, 'user_id');
     }
-
     public function guru() {
         return $this->hasOne(tbl_guru::class, 'user_id');
     }
 
+    public function kelas(){
+        return $this->hasMany(tbl_kelas::class, 'guru_id');
+    }
 }
