@@ -7,15 +7,24 @@
                 Dashboard
             </a>
             @if (Auth::User()->role_id == 999999) <!-- ADMIN -->
-            <div class="sb-sidenav-menu-heading">User Management</div>
-            <a class="nav-link" href="{{ route('admin.teacher') }}">
-                <div class="sb-nav-link-icon"><i class="fas fa-chalkboard-user"></i></div>
-                Teachers
-            </a>
-            <a class="nav-link" href="{{ route('admin.student') }}">
-                <div class="sb-nav-link-icon"><i class="fas fa-children"></i></div>
-                Students
-            </a>
+                <div class="sb-sidenav-menu-heading">User Management</div>
+                <a class="nav-link" href="{{ route('admin.teacher') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-chalkboard-user"></i></div>
+                    Teachers
+                </a>
+                <a class="nav-link" href="{{ route('admin.student') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-children"></i></div>
+                    Students
+                </a>
+            @endif
+
+            {{-- Teacher Access --}}
+            @if(Auth::user()->role_id == 199300)
+                <div class="sb-sidenav-menu-heading">Kelas Management</div>
+                <a class="nav-link" href="{{ route('teacher.create.class') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-chalkboard-user"></i></div>
+                    Buat Kelas
+                </a>
             @endif
         </div>
     </div>
