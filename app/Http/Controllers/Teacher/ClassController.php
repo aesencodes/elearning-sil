@@ -37,4 +37,20 @@ class ClassController extends Controller
             return redirect()->route('teacher.create.class')->with('success', 'Berhasil Membuat Kelas');
         } return redirect()->route('teacher.create.class')->with('danger', 'Whoops!! Terjadi Kesalahan, Silakan coba kembali.');
     }
+
+    public function viewClass() {
+        $dataKelas = tbl_kelas::where('guru_id', Auth::user()->id)->get();
+
+        return view('pages.teacher.kelas.view', [
+            'dataKelas' => $dataKelas,
+        ]);
+    }
+
+    public function viewDetailClass($id_class){
+        $dataClass = tbl_kelas::where('id', $id_class)->first();
+
+        return view('pages.teacher.kelas.detail', [
+            'datakelas' => $dataClass,
+        ]);
+    }
 }

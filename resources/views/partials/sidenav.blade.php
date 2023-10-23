@@ -24,6 +24,9 @@
                 <a class="nav-link" href="{{ route('teacher.create.class') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-chalkboard-user"></i></div>
                     Buat Kelas
+                </a><a class="nav-link" href="{{ route('teacher.class') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-chalkboard-user"></i></div>
+                    Daftar Kelas
                 </a>
             @endif
         </div>

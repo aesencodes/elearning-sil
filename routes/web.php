@@ -52,9 +52,11 @@ Route::prefix('dashboard')->group(function () {
         route::prefix('/teacher')->group(function () {
             Route::get('/',                                     [TeacherDashboardController::class, 'viewDashboard'])->name('teacher.dashboard');
 
-            // Create Class
+            // Class
             Route::get('create-class',                          [ClassController::class, 'viewCreateClass'])->name('teacher.create.class');
             Route::post('create-class',                         [ClassController::class, 'createClass'])->name('teacher.create.post.class');
+            Route::get('view-class',                            [ClassController::class, 'viewClass'])->name('teacher.class');
+            Route::get('class/{id}',                            [ClassController::class, 'viewDetailClass'])->name('teacher.detail.class');
         });
     });
 
