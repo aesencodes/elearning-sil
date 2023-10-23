@@ -53,4 +53,37 @@ class ClassController extends Controller
             'datakelas' => $dataClass,
         ]);
     }
+
+    public function viewUpdateClass($id_class) {
+        $dataClass = tbl_kelas::where('id', $id_class)->first();
+
+        return view('pages.teacher.kelas.update', [
+            'datakelas' => $dataClass,
+        ]);
+    }
+
+    public function updateClass(Request $req) {
+        $req->validate([
+            'name_class'            => 'required',
+            'description_class'     => 'required',
+        ]);
+
+        $update_class = tbl_kelas::where('id', $req->id_class)->update([
+            'name_class'        => $req->name_class,
+            'description_class' => $req->description_class,
+        ]);
+
+        // response
+        if ($update_class) {
+            return redirect()->route('teacher.detail.class', ['id' => $req->id_class])->with('success', 'Berhasil Memperbaharui Kelas');
+        } return redirect()->route('teacher.detail.class', ['id' => $req->id_class])->with('danger', 'Whoops!! Terjadi Kesalahan, Silakan coba kembali.');
+    }
+
+    public function destroyClass($id_class) {
+        $destroyClass = tbl_kelas::where('id', $id_class)->delete();
+
+        if ($destroyClass) {
+            return redirect()->route('teacher.class')->with('success', 'Berhasil Menghapus Kelas');
+        } return redirect()->route('teacher.class')->with('danger', 'Whoops!! Terjadi Kesalahan, Silakan coba kembali.');
+    }
 }

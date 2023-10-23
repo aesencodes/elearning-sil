@@ -8,6 +8,8 @@
 
     <br>
 
+    @include('partials\alert')
+
     <div class="d-flex flex flex-warp">
         @forelse($dataKelas as $dkelas)
             <div class="card ms-2 me-2" style="width: 18rem;">
