@@ -1,30 +1,32 @@
 @extends('layouts.default')
 @section('content')
 
-    <h1 class="mt-4">Welcome, Teacher {{ Auth::User()->guru->name }}</h1>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item active">Dashboard</li>
-    </ol>
+    @include('partials\alert')
 
-    <br>
+    <div class="d-flex flex-wrap justify-content-between">
+        <div>
+            <h1 class="mt-4 ms-2">Perbarui Data Kelas.</h1>
+            <ol class="breadcrumb mb-4 ms-2">
+                <li class="breadcrumb-item active">Perbarui kelas Untuk siswamu.</li>
+            </ol>
+        </div>
+    </div>
 
-    <div class="card">
-        @include('partials\alert')
-
+    <div class="card p-3">
         <form action="{{ route('teacher.update.post.class') }}" method="post">
             @csrf
             <div class="form-group">
-                <label>Name Class</label>
-                <input type="text" name="name_class" value="{{ $datakelas->name_class }}">
-                @error('name_class') <p class="text-danger">{{ $message }}</p> @enderror
+                <label for="nameClass">Nama Kelas</label>
+                <input type="text" class="form-control" id="nameClass" name="name_class" value="{{ $datakelas->name_class }}" placeholder="Masukan nama kelas kamu.">
+                @error('name_class') <small id="nameClass" class="form-text text-muted text-danger">{{ $message }}</small> @enderror
             </div>
-            <div class="form-group">
-                <label>Description Class</label>
-                <input type="text" name="description_class" value="{{ $datakelas->description_class }}">
-                @error('description_class') <p class="text-danger">{{ $message }}</p> @enderror
+            <div class="form-group mt-3">
+                <label for="descriptionClass">Deskripsi Kelas</label>
+                <textarea type="text" class="form-control" id="descriptionClass" name="description_class" placeholder="Masukan deskripsi kelas kamu.">{{ $datakelas->description_class }}</textarea>
+                @error('name_class') <small id="descriptionClass" class="form-text text-muted text-danger">{{ $message }}</small> @enderror
             </div>
             <input value="{{ $datakelas->id }}" name="id_class" style="display: none;">
-            <input type="submit" class="btn btn-primary" value="Perbarui Kelas">
+            <input type="submit" class="btn btn-primary mt-3" value="Perbarui Kelas">
         </form>
     </div>
 

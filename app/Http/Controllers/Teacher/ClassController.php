@@ -34,12 +34,12 @@ class ClassController extends Controller
 
         // response
         if ($create_class) {
-            return redirect()->route('teacher.create.class')->with('success', 'Berhasil Membuat Kelas');
-        } return redirect()->route('teacher.create.class')->with('danger', 'Whoops!! Terjadi Kesalahan, Silakan coba kembali.');
+            return redirect()->route('teacher.class')->with('success', 'Berhasil Membuat Kelas');
+        } return redirect()->route('teacher.class')->with('danger', 'Whoops!! Terjadi Kesalahan, Silakan coba kembali.');
     }
 
     public function viewClass() {
-        $dataKelas = tbl_kelas::where('guru_id', Auth::user()->id)->get();
+        $dataKelas = tbl_kelas::where('guru_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
 
         return view('pages.teacher.kelas.view', [
             'dataKelas' => $dataKelas,
