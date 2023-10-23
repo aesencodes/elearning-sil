@@ -22,6 +22,7 @@
                <div class="text-below p-4 text-white">
                    <h1 class="text-capitalize">{{ $datakelas->name_class }}</h1>
                    <p>{{ $datakelas->description_class }}</p>
+                   <div class="border-1"><p>Kode Kelas : {{ $datakelas->code_class }}</p></div>
                </div>
 
                {{-- Setting Class Button --}}
