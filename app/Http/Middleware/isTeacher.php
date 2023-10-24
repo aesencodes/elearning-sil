@@ -20,6 +20,6 @@ class isTeacher
             if (Auth::user()->role_id == 199300) {
                 return $next($request);
             } return abort(404);
-        } return abort(404);
+        } return redirect()->route('login.view');
     }
 }
