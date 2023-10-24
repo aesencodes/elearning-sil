@@ -20,6 +20,6 @@ class isTeacher
             if (Auth::user()->role_id == 199300) {
                 return $next($request);
             } return abort(404);
-        } return redirect()->route('login.view');
+        } return redirect()->route('login.view')->with('danger', 'Sesi Login kamu telah berakhir, Silakan Login Kembali!');
     }
 }

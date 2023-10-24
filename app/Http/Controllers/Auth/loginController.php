@@ -81,8 +81,8 @@ class loginController extends Controller
                     // Access Route Redirect
                     return $this->accessRoute();
 
-                } return back()->with('error', 'Password Salah');
-            } return back()->with('error', 'Email Tidak Tersedia');
+                } return back()->with('danger', 'Password Salah');
+            } return back()->with('danger', 'Email Tidak Tersedia');
         } return print_r("Anda sudah login Hey!!!");
     }
 
