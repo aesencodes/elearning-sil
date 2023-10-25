@@ -21,7 +21,11 @@ class tbl_kelas extends Model
     public $incrementing = false;
 
     // Relations
-    public function guru_id() {
+    public function guru() {
         return $this->belongsTo(User::class, 'guru_id')->withDefault();
+    }
+
+    public function materi(){
+        return $this->hasMany(tbl_materi::class, 'kelas_id');
     }
 }
