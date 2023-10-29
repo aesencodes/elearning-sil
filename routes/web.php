@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Teacher\ClassController;
+use App\Http\Controllers\Teacher\TugasController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\loginController;
@@ -60,6 +61,8 @@ Route::prefix('dashboard')->group(function () {
             Route::get('update/class/{id}',                     [ClassController::class, 'viewUpdateClass'])->name('teacher.update.class');
             Route::post('update-class',                         [ClassController::class, 'updateClass'])->name('teacher.update.post.class');
             Route::delete('delete-class/{id}',                  [ClassController::class, 'destroyClass'])->name('teacher.delete.class');
+            
+            Route::get('create/tugas',                          [TugasController::class, 'viewCreateTugas'])->name('teacher.create.tugas');
         });
     });
 
