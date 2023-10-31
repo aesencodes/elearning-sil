@@ -1,7 +1,7 @@
 @extends('layouts.default')
 @section('content')
 
-    @include('partials\alert')
+    @include('partials.alert')
 
     <div class="d-flex flex-wrap justify-content-between">
         <div>
@@ -13,7 +13,7 @@
     </div>
 
     <div class="card p-3">
-        <form action="{{ route('teacher.create.post.class') }}" method="post">
+        <form action="{{ route('teacher.create.post.tugas') }}" method="post">
             @csrf
             <div class="form-group mt-3">
                 <label for="descriptionClass">Judul Tugas</label>

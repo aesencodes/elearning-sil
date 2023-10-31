@@ -62,8 +62,10 @@ Route::prefix('dashboard')->group(function () {
             Route::post('update-class',                         [ClassController::class, 'updateClass'])->name('teacher.update.post.class');
             Route::delete('delete-class/{id}',                  [ClassController::class, 'destroyClass'])->name('teacher.delete.class');
             
+            // Tugas
             Route::get('create/tugas',                          [TugasController::class, 'viewCreateTugas'])->name('teacher.create.tugas');
-            Route::get('view/tugas',                          [TugasController::class, 'index'])->name('teacher.tugas');
+            Route::post('create-tugas',                         [TugasController::class, 'CreateTugas'])->name('teacher.create.post.tugas');
+            Route::get('view/tugas',                            [TugasController::class, 'index'])->name('teacher.tugas');
         });
     });
 
