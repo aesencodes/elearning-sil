@@ -3,87 +3,46 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
-use App\Models\tbl_kelas;
-use Illuminate\Http\RedirectResponse;
+use App\Models\tbl_tugas;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class TugasController extends Controller
 {
+    public function index()
+    {
+        $tugas = tbl_tugas::all();
+        return view('pages.teacher.tugas.view', [
+            'tugas' => $tugas,
+        ]);
+    }
 
-    public function viewCreateTugas(): View {
+    public function viewCreateTugas()
+    {
         return view('pages.teacher.tugas.create');
     }
 
-    public function createClass(Request $req) {
+    public function createTugas(Request $req)
+    {
         $req->validate([
-            'name_class'            => 'required',
-            'description_class'     => 'required',
+            'judul_tugas' => 'required',
+            'deskripsi_tugas' => 'required',
+            'file_upload_tugas' => 'required',
         ]);
 
-        // create class
-        $code_class = RandomForCode(5);
-
-        $create_class = tbl_kelas::create([
-            'name_class'        => $req->name_class,
-            'description_class' => $req->description_class,
-            'guru_id'           => Auth::user()->id,
-            'code_class'        => $code_class,
+        $create_tugas = tbl_tugas::create([
+            'judul_tugas'       => $req->judul_tugas,
+            'deskripsi_tugas'   => $req->deskripsi_tugas,
+            'id'                => $req->id,
+            'id_guru'           => Auth::user()->id,
+            'file_upload_tugas' => $req->file_upload_tugas,
+            'id_kelas'          => $code_class,
         ]);
 
-        // response
-        if ($create_class) {
-            return redirect()->route('teacher.class')->with('success', 'Berhasil Membuat Kelas');
-        } return redirect()->route('teacher.class')->with('danger', 'Whoops!! Terjadi Kesalahan, Silakan coba kembali.');
+        if ($create_tugas) {
+            return redirect()->route('teacher.tugas')->with('success', 'Berhasil Membuat Kelas');
+        } return redirect()->route('teacher.tugas')->with('danger', 'Whoops!! Terjadi Kesalahan, Silakan coba kembali.');
     }
 
-    public function viewClass() {
-        $dataKelas = tbl_kelas::where('guru_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
-
-        return view('pages.teacher.kelas.view', [
-            'dataKelas' => $dataKelas,
-        ]);
-    }
-
-    public function viewDetailClass($id_class){
-        $dataClass = tbl_kelas::where('id', $id_class)->first();
-
-        return view('pages.teacher.kelas.detail', [
-            'datakelas' => $dataClass,
-        ]);
-    }
-
-    public function viewUpdateClass($id_class) {
-        $dataClass = tbl_kelas::where('id', $id_class)->first();
-
-        return view('pages.teacher.kelas.update', [
-            'datakelas' => $dataClass,
-        ]);
-    }
-
-    public function updateClass(Request $req) {
-        $req->validate([
-            'name_class'            => 'required',
-            'description_class'     => 'required',
-        ]);
-
-        $update_class = tbl_kelas::where('id', $req->id_class)->update([
-            'name_class'        => $req->name_class,
-            'description_class' => $req->description_class,
-        ]);
-
-        // response
-        if ($update_class) {
-            return redirect()->route('teacher.detail.class', ['id' => $req->id_class])->with('success', 'Berhasil Memperbaharui Kelas');
-        } return redirect()->route('teacher.detail.class', ['id' => $req->id_class])->with('danger', 'Whoops!! Terjadi Kesalahan, Silakan coba kembali.');
-    }
-
-    public function destroyClass($id_class) {
-        $destroyClass = tbl_kelas::where('id', $id_class)->delete();
-
-        if ($destroyClass) {
-            return redirect()->route('teacher.class')->with('success', 'Berhasil Menghapus Kelas');
-        } return redirect()->route('teacher.class')->with('danger', 'Whoops!! Terjadi Kesalahan, Silakan coba kembali.');
-    }
 }

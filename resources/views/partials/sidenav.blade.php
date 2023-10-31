@@ -28,10 +28,7 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-chalkboard-user"></i></div>
                     Daftar Kelas
                 </a>
-                </a><a class="nav-link" href="{{ route('teacher.create.tugas') }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-chalkboard-user"></i></div>
-                    Buat Tugas
-                </a>
+        
             @endif
         </div>
     </div>

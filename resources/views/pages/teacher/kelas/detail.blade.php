@@ -47,6 +47,7 @@
             <div class="m-2" style="width: 22% !important;">
                 <div class="card p-3">
                     <h4>Daftar Tugas</h4>
+                    <a href="{{ route('teacher.create.tugas')}}">Buat Tugas</a>
                     <ul>
                         <li>Tugas Pertama</li>
                         <li>Tugas kedua</li>

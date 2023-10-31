@@ -63,6 +63,7 @@ Route::prefix('dashboard')->group(function () {
             Route::delete('delete-class/{id}',                  [ClassController::class, 'destroyClass'])->name('teacher.delete.class');
             
             Route::get('create/tugas',                          [TugasController::class, 'viewCreateTugas'])->name('teacher.create.tugas');
+            Route::get('view/tugas',                          [TugasController::class, 'index'])->name('teacher.tugas');
         });
     });
 
