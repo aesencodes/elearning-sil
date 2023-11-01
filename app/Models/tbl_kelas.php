@@ -28,4 +28,8 @@ class tbl_kelas extends Model
     public function materi(){
         return $this->hasMany(tbl_materi::class, 'kelas_id');
     }
+
+    public function list_siswa(){
+        return $this->hasMany(tbl_kelas_siswa::class, 'kelas_id');
+    }
 }
