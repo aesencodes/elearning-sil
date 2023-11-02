@@ -31,6 +31,15 @@
                     Daftar Kelas
                 </a>
             @endif
+
+            {{-- Student Access --}}
+            @if(Auth::user()->role_id == 199200)
+                <div class="sb-sidenav-menu-heading">Kelas</div>
+                <a class="nav-link" href="{{  route('student.class') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-chalkboard-user"></i></div>
+                    Kelas
+                </a>
+            @endif
         </div>
     </div>
     <div class="sb-sidenav-footer">
