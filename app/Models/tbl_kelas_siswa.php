@@ -11,7 +11,7 @@ class tbl_kelas_siswa extends Model
     protected $table = 'tbl_kelas_siswas';
     protected $fillable = [
         'kelas_id',
-        'user_id',
+        'siswa_id',
     ];
     protected $keyType = 'string';
     public $incrementing = false;
