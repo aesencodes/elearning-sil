@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
 use App\Http\Controllers\Teacher\DashboardController as TeacherDashboardController;
+use App\Http\Controllers\Teacher\MateriController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -60,6 +61,10 @@ Route::prefix('dashboard')->group(function () {
             Route::get('update/class/{id}',                     [ClassController::class, 'viewUpdateClass'])->name('teacher.update.class');
             Route::post('update-class',                         [ClassController::class, 'updateClass'])->name('teacher.update.post.class');
             Route::delete('delete-class/{id}',                  [ClassController::class, 'destroyClass'])->name('teacher.delete.class');
+
+            // Materi
+            Route::get('create/materi/{id}/{guru_id}',          [MateriController::class, 'create'])->name('teacher.create.materi');
+            Route::post('create-materi',                         [MateriController::class, 'store'])->name('teacher.create.post.materi');
         });
     });
 

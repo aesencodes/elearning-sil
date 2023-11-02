@@ -55,6 +55,9 @@
                 </div>
             </div>
            <div class="w-75 m-2">
+                <div class="card p-2 mb-2">
+                    <a href="{{ route('teacher.create.materi', ['id' => $datakelas->id, 'guru_id' => $datakelas->guru_id]) }}" class="small">Kalian goblok ya</a>
+                </div>
                <div class="card p-2">
                    <h3>Tugas Pertama</h3>
                </div>
