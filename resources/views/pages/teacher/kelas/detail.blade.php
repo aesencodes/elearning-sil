@@ -56,7 +56,7 @@
             </div>
            <div class="w-75 m-2">
                 <div class="card p-2 mb-2">
-                    <a href="{{ route('teacher.create.materi', ['id' => $datakelas->id, 'guru_id' => $datakelas->guru_id]) }}" class="small">Tambahkan sesuatu pada kelas anda</a>
+                    <a href="{{ route('teacher.create.materi', ['id' => $datakelas->id, 'guru_id' => $datakelas->guru_id]) }}" class="small mb-4">Tambahkan sesuatu pada kelas anda</a>
                 </div>
                 @foreach ($datamateri as $item)
                 <div class="card p-2 mb-2">
