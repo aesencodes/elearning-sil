@@ -13,7 +13,7 @@
     </div>
 
     <div class="card p-3">
-        <form action="{{ route('teacher.create.post.materi') }}" method="post">
+        <form action="{{ route('teacher.create.post.materi') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="nameClass">Nama Materi</label>
@@ -29,9 +29,9 @@
                 <label for="formFile" class="form-label">Upload Materi</label>
                 <input class="form-control" type="file" id="formFile" name="file">
             </div>
-            <input type="hidden" name="class_id" value="{{ $id }}">
-            <input type="hidden" name="class_id" value="{{ $guru_id }}">
-            <input type="submit" class="btn btn-primary mt-3" value="Tambah Materi">
+            <input type="hidden" name="id" value="{{ $id }}">
+            <input type="hidden" name="guru_id" value="{{ $guru_id }}">
+            <button type="submit" class="btn btn-primary mt-3">Tambah Materi</button>
         </form>
     </div>
 @endsection

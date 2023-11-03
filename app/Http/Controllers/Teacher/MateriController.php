@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers\Teacher;
 
-use App\Http\Controllers\Controller;
+use Illuminate\View\View;
+use App\Models\tbl_materi;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 
 class MateriController extends Controller
 {
@@ -28,27 +33,31 @@ class MateriController extends Controller
      */
     public function store(Request $request)
     {
-        $req->validate([
+        $request->validate([
             'name'      => 'required|string',
-            'desc'      => 'required |string',
-            'file'      => 'nullable|file|mimes:pdf,docx',
+            'desc'      => 'required|string',
+            'file'      => 'required|file|mimes:pdf,docx|max:2048',
             'id'        => 'required',
             'guru_id'   => 'required'
         ]);
+        
+        $fileName = time().'.'.$request->file('file')->extension();
+        $fileDir = 'public/' . $request->guru_id .'/'. $request->id . '/materi' . $fileName;
 
-        // create class
-        $create_class = tbl_materi::create([
-            'name'      => $req->title_materi,
-            'desc'      => $req->description_materi,
-            'file'      => $req->file_name_materi,
-            'id'        => $req->kelas_id,
-            'guru_id'   => $req->guru_id
+        Storage::putFileAs($fileDir, $request->file('file'), $fileName);
+
+        $create_materi = tbl_materi::create([
+            'title_materi'          => $request->name,
+            'description_materi'    => $request->desc,
+            'file_name_materi'      => $request->file,
+            'kelas_id'              => $request->id,
+            'guru_id'               => $request->guru_id
         ]);
 
         // response
-        if ($create_class) {
-            return redirect()->route('teacher.class')->with('success', 'Berhasil Membuat Kelas');
-        } return redirect()->route('teacher.class')->with('danger', 'Whoops!! Terjadi Kesalahan, Silakan coba kembali.');
+        if ($create_materi) {
+            return redirect()->route('teacher.detail.class', ['id' => $request->id])->with('success', 'Berhasil Membuat Kelas');
+        } return redirect()->back()->with('danger', 'Whoops!! Terjadi Kesalahan, Silakan coba kembali.');
     }
 
     /**

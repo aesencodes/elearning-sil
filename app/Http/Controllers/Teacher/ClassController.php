@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
 use App\Models\tbl_kelas;
+use App\Models\tbl_materi;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -48,9 +49,11 @@ class ClassController extends Controller
 
     public function viewDetailClass($id_class){
         $dataClass = tbl_kelas::where('id', $id_class)->first();
+        $dataMateri = tbl_materi::where('kelas_id', $id_class)->get();
 
         return view('pages.teacher.kelas.detail', [
             'datakelas' => $dataClass,
+            'datamateri' => $dataMateri
         ]);
     }
 

@@ -64,7 +64,7 @@ Route::prefix('dashboard')->group(function () {
 
             // Materi
             Route::get('create/materi/{id}/{guru_id}',          [MateriController::class, 'create'])->name('teacher.create.materi');
-            Route::post('create-materi',                         [MateriController::class, 'store'])->name('teacher.create.post.materi');
+            Route::post('create-materi',                        [MateriController::class, 'store'])->name('teacher.create.post.materi');
         });
     });
 
