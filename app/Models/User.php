@@ -73,4 +73,8 @@ class User extends Authenticatable
     public function list_student_inClass() {
         return $this->hasMany(tbl_kelas_siswa::class, 'siswa_id');
     }
+
+    public function ujian() {
+        return $this->hasMany(tbl_ujian::class, 'guru_id');
+    }
 }

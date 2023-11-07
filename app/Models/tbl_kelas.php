@@ -32,4 +32,13 @@ class tbl_kelas extends Model
     public function list_siswa(){
         return $this->hasMany(tbl_kelas_siswa::class, 'kelas_id');
     }
+
+    public function ujian() {
+        return $this->hasMany(tbl_ujian::class, 'kelas_id');
+    }
+
+    public function jawaban_ujian() {
+        return $this->hasMany(tbl_jawaban_ujian::class, 'kelas_id');
+    }
+
 }

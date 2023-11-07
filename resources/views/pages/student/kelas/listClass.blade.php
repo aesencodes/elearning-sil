@@ -31,7 +31,7 @@
             </div>
         @empty
             <div class="alert alert-danger alert-dismissible fade show mg-t-20 w-100" role="alert">
-                Kamu belum membuka kelas.
+                Kamu belum bergabung dalam kelas.
             </div>
         @endforelse
     </div>
