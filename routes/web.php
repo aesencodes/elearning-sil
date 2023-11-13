@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
 use App\Http\Controllers\Teacher\DashboardController as TeacherDashboardController;
 use App\Http\Controllers\Teacher\MateriController;
+use App\Http\Controllers\Student\ClassController as StudentClassController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -46,7 +47,14 @@ Route::get('/', function () {
 
 Route::prefix('dashboard')->group(function () {
     Route::middleware(['isStudent'])->group(function () {
-        Route::get('/student', [StudentDashboardController::class, 'viewDashboard'])->name('student.dashboard');
+        route::prefix('student')->group(function () {
+            Route::get('/',             [StudentDashboardController::class, 'viewDashboard'])->name('student.dashboard');
+
+            // Class
+            route::get('/class',                [StudentClassController::class, 'viewClass'])->name('student.class');
+            route::post('join/class',           [StudentClassController::class, 'joinCLass'])->name('student.join.class');
+            Route::get('class/{id}',            [StudentClassController::class, 'viewDetailClass'])->name('student.detail.class');
+        });
     });
 
     Route::middleware(['isTeacher'])->group(function () {

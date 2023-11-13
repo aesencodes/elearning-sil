@@ -15,48 +15,6 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class loginController extends Controller
 {
-    // Dummy Data
-    function createDataDummy(): bool {
-
-        $this->insertDataSiswaw();
-        $this->insertDataGuru();
-        $user = New User();
-        $user->email = 'asd@gmail.com';
-        $user->password = Hash::make('asd');
-        $user->role_id = 999999;
-        $user->save();
-
-        return true;
-    }
-
-    private function insertDataSiswaw() {
-        $user = New User();
-        $user->email = 'siswa@gmail.com';
-        $user->password = Hash::make('123123123');
-        $user->role_id = 199200;
-        $user->save();
-
-        tbl_siswa::create([
-            'user_id' => $user->id,
-            'nis'   => 12312312,
-            'name'  => 'Nama Siswa',
-        ]);
-    }
-
-    private function insertDataGuru() {
-        // Teacher
-        $guru = New User();
-        $guru->email = 'guru@gmail.com';
-        $guru->password = Hash::make('112233');
-        $guru->role_id = 199300;
-        $guru->save();
-
-        tbl_guru::create([
-            'user_id' => $guru->id,
-            'nuptk'   => 12312312,
-            'name'  => 'Nama Guru',
-        ]);
-    }
 
     function viewLogin(): RedirectResponse|string|View
     {

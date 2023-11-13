@@ -69,4 +69,12 @@ class User extends Authenticatable
     public function comment_materi() {
         return $this->hasMany(tbl_comment_materi::class, 'user_id');
     }
+
+    public function list_student_inClass() {
+        return $this->hasMany(tbl_kelas_siswa::class, 'siswa_id');
+    }
+
+    public function ujian() {
+        return $this->hasMany(tbl_ujian::class, 'guru_id');
+    }
 }
