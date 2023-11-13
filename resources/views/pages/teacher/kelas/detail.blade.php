@@ -65,7 +65,7 @@
                 </div>
                 @endforeach
                <div class="card p-2">
-                   <h3>Tugas Pertama</h3>
+                   <h3>Materi Pertama</h3>
                </div>
            </div>
        </div>
