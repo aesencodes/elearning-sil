@@ -20,6 +20,6 @@ class isAdmin
             if (Auth::user()->role_id == 999999) {
                 return $next($request);
             } return abort(404);
-        } return abort(404);
+        } return redirect()->route('login.view')->with('danger', 'Sesi Login kamu telah berakhir, Silakan Login Kembali!');
     }
 }

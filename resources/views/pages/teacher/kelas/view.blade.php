@@ -1,7 +1,7 @@
 @extends('layouts.default')
 @section('content')
 
-    @include('partials\alert')
+    @include('partials.alert')
 
     <div class="d-flex flex-wrap justify-content-between">
         <div>

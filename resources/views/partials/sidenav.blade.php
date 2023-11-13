@@ -2,10 +2,12 @@
     <div class="sb-sidenav-menu">
         <div class="nav">
             <div class="sb-sidenav-menu-heading">Core</div>
-            <a class="nav-link" href="{{ route('admin.dashboard') }}">
+            @if(Auth::user()->role_id == 199300)
+            <a class="nav-link" href="{{ route('teacher.dashboard') }}">
                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                 Dashboard
             </a>
+            @endif
             @if (Auth::User()->role_id == 999999) <!-- ADMIN -->
                 <div class="sb-sidenav-menu-heading">User Management</div>
                 <a class="nav-link" href="{{ route('admin.teacher') }}">
@@ -29,6 +31,15 @@
                     Daftar Kelas
                 </a>
         
+            @endif
+
+            {{-- Student Access --}}
+            @if(Auth::user()->role_id == 199200)
+                <div class="sb-sidenav-menu-heading">Kelas</div>
+                <a class="nav-link" href="{{  route('student.class') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-chalkboard-user"></i></div>
+                    Kelas
+                </a>
             @endif
         </div>
     </div>

@@ -22,7 +22,6 @@
                <div class="text-below p-4 text-white">
                    <h1 class="text-capitalize">{{ $datakelas->name_class }}</h1>
                    <p>{{ $datakelas->description_class }}</p>
-                   <div class="border-1"><p>Kode Kelas : {{ $datakelas->code_class }}</p></div>
                </div>
 
                {{-- Setting Class Button --}}
@@ -47,7 +46,6 @@
             <div class="m-2" style="width: 22% !important;">
                 <div class="card p-3">
                     <h4>Daftar Tugas</h4>
-                    <a href="{{ route('teacher.create.tugas')}}">Buat Tugas</a>
                     <ul>
                         <li>Tugas Pertama</li>
                         <li>Tugas kedua</li>
