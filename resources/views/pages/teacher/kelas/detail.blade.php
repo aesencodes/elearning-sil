@@ -55,6 +55,15 @@
                 </div>
             </div>
            <div class="w-75 m-2">
+                <div class="card p-2 mb-2">
+                    <a href="{{ route('teacher.create.materi', ['id' => $datakelas->id, 'guru_id' => $datakelas->guru_id]) }}" class="small mb-4">Tambahkan sesuatu pada kelas anda</a>
+                </div>
+                @foreach ($datamateri as $item)
+                <div class="card p-2 mb-2">
+                    <h3>{{ $item->title_materi }}</h3>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ $item->description_materi }}</h6>
+                </div>
+                @endforeach
                <div class="card p-2">
                    <h3>Tugas Pertama</h3>
                </div>

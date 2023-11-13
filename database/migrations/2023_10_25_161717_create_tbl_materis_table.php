@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tbl_materis', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('guru_id');
-            $table->foreignUuid('kelas_id');
+            $table->foreignUuid('kelas_id')->default('00000000-0000-0000-0000-000000000000');
             $table->string('title_materi');
             $table->longText('file_name_materi')->nullable();
             $table->longText('description_materi');
