@@ -41,4 +41,8 @@ class tbl_kelas extends Model
         return $this->hasMany(tbl_jawaban_ujian::class, 'kelas_id');
     }
 
+    public function tugas() {
+        return $this->hasMany(tbl_tugas::class, 'id_kelas');
+    }
+
 }

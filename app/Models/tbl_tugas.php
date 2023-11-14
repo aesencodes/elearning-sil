@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class tbl_tugas extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
+    protected $table = 'tbl_tugas';
     protected $fillable =[
         'id',
         'id_guru',
@@ -17,4 +20,15 @@ class tbl_tugas extends Model
         'file_upload_tugas',
         'id_kelas'
     ];
+    protected $keyType = 'string';
+    public $incrementing = false;
+
+    // Relations
+    public function guru() {
+        return $this->belongsTo(User::class, 'id_guru');
+    }
+
+    public function kelas() {
+        return $this->belongsTo(tbl_kelas::class, 'id_kelas');
+    }
 }

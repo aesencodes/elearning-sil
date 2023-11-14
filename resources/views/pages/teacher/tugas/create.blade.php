@@ -4,32 +4,32 @@
     @include('partials.alert')
 
     <div class="d-flex flex-wrap justify-content-between">
-        <div>
+        <div class="mb-4">
             <h1 class="mt-4 ms-2">Buat Tugas.</h1>
-            <ol class="breadcrumb mb-4 ms-2">
-                <li class="breadcrumb-item active">Buat Tugas.</li>
-            </ol>
+
         </div>
     </div>
 
     <div class="card p-3">
-        <form action="{{ route('teacher.create.post.tugas') }}" method="post">
+        <form action="{{ route('teacher.create.post.tugas') }}" method="post" enctype="multipart/form-data">
             @csrf
-            <div class="form-group mt-3">
+            <input type="hidden" name="id_kelas" value="{{ $id_kelas }}" style="display: none;">
+            <input type="hidden" name="id_guru" value="{{ $id_guru }}" style="display: none;">
+            <div class="form-group mt-1">
                 <label for="descriptionClass">Judul Tugas</label>
-                <textarea type="text" class="form-control" id="descriptionClass" name="judul_tugas" placeholder="Masukan Tugas."></textarea>
-                @error('name_class') <small id="descriptionClass" class="form-text text-muted text-danger">{{ $message }}</small> @enderror
+                <input type="text" class="form-control" id="descriptionClass" name="judul_tugas" placeholder="Masukan Tugas." />
+                @error('judul_tugas') <small id="descriptionClass" class="form-text text-muted text-danger" style="color: #c54444 !important">{{ $message }}</small> @enderror
             </div>
             <div class="form-group mt-3">
                 <label for="descriptionClass">Deskripsi Tugas</label>
                 <textarea type="text" class="form-control" id="descriptionClass" name="deskripsi_tugas" placeholder="Masukan Tugas."></textarea>
-                @error('name_class') <small id="descriptionClass" class="form-text text-muted text-danger">{{ $message }}</small> @enderror
+                @error('deskripsi_tugas') <small id="descriptionClass" class="form-text text-muted text-danger" style="color: #c54444 !important">{{ $message }}</small> @enderror
             </div>
-            <div class="form-group">
-                <label for="upload_file" class="control-label col-sm-3">Upload File Tugas</label>
-                <div class="col-sm-9">
-                     <input class="form-control" type="file" name="file_upload_tugas" id="upload_file">
-                </div>
+            <div class="form-group mt-2">
+                <label for="formFile" class="form-label">Upload Tugas</label>
+                <input class="form-control" type="file" id="formFile" name="file">
+
+                @error('file') <small id="descriptionClass" class="form-text text-muted text-danger" style="color: #c54444 !important">{{ $message }}</small> @enderror
            </div>
             <input type="submit" class="btn btn-primary mt-3" value="Buat Tugas">
         </form>

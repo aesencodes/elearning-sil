@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('tbl_tugas', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->unsignedBigInteger('id_guru')->constrained();
+            $table->foreignUuid('id_kelas');
+            $table->foreignUuid('id_guru');
             $table->string('judul_tugas');
             $table->longText('deskripsi_tugas');
             $table->longText('file_upload_tugas')->nullable();
-            $table->unsignedBigInteger('id_kelas')->constrained();
             $table->timestamps();
         });
     }

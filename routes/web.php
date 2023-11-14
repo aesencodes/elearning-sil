@@ -70,18 +70,14 @@ Route::prefix('dashboard')->group(function () {
             Route::get('update/class/{id}',                     [ClassController::class, 'viewUpdateClass'])->name('teacher.update.class');
             Route::post('update-class',                         [ClassController::class, 'updateClass'])->name('teacher.update.post.class');
             Route::delete('delete-class/{id}',                  [ClassController::class, 'destroyClass'])->name('teacher.delete.class');
-<<<<<<< HEAD
-            
+
             // Tugas
-            Route::get('create/tugas',                          [TugasController::class, 'viewCreateTugas'])->name('teacher.create.tugas');
-            Route::post('create-tugas',                         [TugasController::class, 'CreateTugas'])->name('teacher.create.post.tugas');
-            Route::get('view/tugas',                            [TugasController::class, 'index'])->name('teacher.tugas');
-=======
+            Route::get('create/tugas/{id_kelas}/{id_guru}',     [TugasController::class, 'viewCreateTugas'])->name('teacher.create.tugas');
+            Route::post('create_dtugas',                         [TugasController::class, 'createTugas'])->name('teacher.create.post.tugas');
 
             // Materi
             Route::get('create/materi/{id}/{guru_id}',          [MateriController::class, 'create'])->name('teacher.create.materi');
             Route::post('create-materi',                        [MateriController::class, 'store'])->name('teacher.create.post.materi');
->>>>>>> dbd71738dc9cea8d7c2e42af9dc813350209efd7
         });
     });
 
