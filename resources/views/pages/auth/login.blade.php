@@ -98,7 +98,7 @@
             </div>
             <div class="login-input text-center">
                 <h2 class="title mb-3 fw-bold">Hello Again!</h2>
-                <p class="sub-title">Siapkan diri kamu untuk belajar jauh!</p>
+                <p class="sub-title">Siapkan diri kamu untuk belajar lebih jauh!</p>
 
                 <div class="form-login container d-flex align-items-center justify-content-center">
                     <form method="POST" class="w-50" action="{{ route('login.post') }}">
