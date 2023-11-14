@@ -47,6 +47,8 @@ Route::get('/', function () {
 
 
 Route::prefix('dashboard')->group(function () {
+    Route::get('download/tugas/{file_name}/{id_kelas}/{id_guru}',       [TugasController::class, 'downloadFileTugas'])->name('teacher.download.tugas');
+
     Route::middleware(['isStudent'])->group(function () {
         route::prefix('student')->group(function () {
             Route::get('/',             [StudentDashboardController::class, 'viewDashboard'])->name('student.dashboard');
@@ -74,7 +76,6 @@ Route::prefix('dashboard')->group(function () {
             // Tugas
             Route::get('create/tugas/{id_kelas}/{id_guru}',         [TugasController::class, 'viewCreateTugas'])->name('teacher.create.tugas');
             Route::post('create_dtugas',                            [TugasController::class, 'createTugas'])->name('teacher.create.post.tugas');
-            Route::get('download/tugas/{file_name}/{id_kelas}/{id_guru}',       [TugasController::class, 'downloadFileTugas'])->name('teacher.download.tugas');
 
             // Materi
             Route::get('create/materi/{id}/{guru_id}',          [MateriController::class, 'create'])->name('teacher.create.materi');
