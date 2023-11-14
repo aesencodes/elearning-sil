@@ -23,21 +23,6 @@
                    <h1 class="text-capitalize">{{ $datakelas->name_class }}</h1>
                    <p>{{ $datakelas->description_class }}</p>
                </div>
-
-               {{-- Setting Class Button --}}
-               <div class="dropdown">
-                   <div class="pointer-event" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-cog"></i></div>
-                   <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-                       <li><a class="dropdown-item" href="{{ route('teacher.update.class', ['id' => $datakelas->id]) }}">Perbarui Kelas</a></li>
-                       <li>
-                           <form action="{{ route('teacher.delete.class', $datakelas->id) }}" method="POST">
-                               @csrf
-                               @method('DELETE')
-                               <button type="submit" class="btn btn-danger btn-sm w-100">Delete Kelas</button>
-                           </form>
-                       </li>
-                   </ul>
-               </div>
            </div>
        </div>
 
@@ -47,15 +32,47 @@
                 <div class="card p-3">
                     <h4>Daftar Tugas</h4>
                     <ul>
-                        <li>Tugas Pertama</li>
-                        <li>Tugas kedua</li>
-                        <li>Tugas ketiga</li>
                     </ul>
                 </div>
             </div>
-           <div class="w-75 m-2">
-               <div class="card p-2">
-                   <h3>Tugas Pertama</h3>
+           <div class="m-2" style="width: 73%;">
+               <nav>
+                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                       <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-materi" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Daftar Materi</button>
+                       <button class="nav-link" id="nav-disabled-tab" data-bs-toggle="tab" data-bs-target="#nav-tugas" type="button" role="tab" aria-controls="nav-disabled" aria-selected="true">Daftar Tugas</button>
+                   </div>
+               </nav>
+               <div class="tab-content" id="nav-tabContent">
+                   {{-- Daftar Materi --}}
+                   <div class="tab-pane fade show active" id="nav-materi" role="tabpanel" aria-labelledby="nav-materi-tab" tabindex="0">
+                       @forelse ($datamateri as $item)
+                           <div class="card p-2 mb-2 mt-2">
+                               <h3 class="mb-3">{{ $item->title_materi }}</h3>
+                               <h6 class="casrd-subtitle mb-2 text-justify">{{ $item->description_materi }}</h6>
+                           </div>
+                       @empty
+                           <div class="card mb-2 mt-4 bg-danger">
+                               <p class="text-white text-center align-content-center pt-2">Belum Ada Materi</p>
+                           </div>
+                       @endforelse
+                   </div>
+
+                   {{-- Daftar Tugas --}}
+                   <div class="tab-pane fade" id="nav-tugas" role="tabpanel" aria-labelledby="nav-tugas-tab" tabindex="0">
+                       @forelse($dataTugas as $item)
+                           <div class="card p-3 mb-2 mt-2">
+                               <h3 class="mb-3">{{ $item->judul_tugas }}</h3>
+                               <p class="card-subtitle mb-2 mt-2 text-justify">{{ $item->deskripsi_tugas }}</p>
+                               @if($item->file_upload_tugas != null)
+                                   <a class="mt-3" href="{{ route('teacher.download.tugas', ['file_name' => $item->file_upload_tugas, 'id_guru' => $datakelas->guru_id, 'id_kelas' => $datakelas->id]) }}">Download Berkas Tugas</a>
+                               @endif
+                           </div>
+                       @empty
+                           <div class="card mb-2 mt-4 bg-danger">
+                               <p class="text-white text-center align-content-center pt-2">Belum Ada Tugas</p>
+                           </div>
+                       @endforelse
+                   </div>
                </div>
            </div>
        </div>

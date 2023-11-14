@@ -91,6 +91,9 @@
                            <div class="card p-3 mb-2 mt-2">
                                <h3 class="mb-3">{{ $item->judul_tugas }}</h3>
                                <p class="card-subtitle mb-2 mt-2 text-justify">{{ $item->deskripsi_tugas }}</p>
+                               @if($item->file_upload_tugas != null)
+                                   <a class="mt-3" href="{{ route('teacher.download.tugas', ['file_name' => $item->file_upload_tugas, 'id_guru' => $datakelas->guru_id, 'id_kelas' => $datakelas->id]) }}">Download Berkas Tugas</a>
+                               @endif
                            </div>
                        @empty
                            <div class="card mb-2 mt-4 bg-danger">
