@@ -27,7 +27,7 @@
                 </div>
             </div>
         @empty
-            <div class="alert alert-danger alert-dismissible fade show mg-t-20" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show mg-t- w-100" role="alert">
                 Kamu belum membuka kelas.
             </div>
         @endforelse

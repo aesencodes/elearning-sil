@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
 
         tbl_guru::create([
             'user_id' => $teacher->id,
-            'nuptk' => 12312312,
+            'nuptk' => 123123123,
             'name' => 'Nama Guru',
         ]);
 
