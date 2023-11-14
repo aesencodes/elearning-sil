@@ -19,7 +19,7 @@ class MateriController extends Controller
     {
         //
     }
-    
+
     /**
      * Show the form for creating a new resource.
      */
@@ -40,9 +40,11 @@ class MateriController extends Controller
             'id'        => 'required',
             'guru_id'   => 'required'
         ]);
-        
+
+        return $request;
+
         $fileName = time().'.'.$request->file('file')->extension();
-        $fileDir = 'public/' . $request->guru_id .'/'. $request->id . '/materi' . $fileName;
+        $fileDir = 'public/' . $request->guru_id .'/'. $request->id . '/materi/' . $fileName;
 
         Storage::putFileAs($fileDir, $request->file('file'), $fileName);
 

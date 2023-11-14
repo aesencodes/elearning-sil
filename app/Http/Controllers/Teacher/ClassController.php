@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Teacher;
 use App\Http\Controllers\Controller;
 use App\Models\tbl_kelas;
 use App\Models\tbl_materi;
+use App\Models\tbl_tugas;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class ClassController extends Controller
@@ -48,12 +50,14 @@ class ClassController extends Controller
     }
 
     public function viewDetailClass($id_class){
-        $dataClass = tbl_kelas::where('id', $id_class)->first();
-        $dataMateri = tbl_materi::where('kelas_id', $id_class)->get();
+        $dataClass  = tbl_kelas::where('id', $id_class)->first();
+        $dataMateri = tbl_materi::where('kelas_id', $id_class)->orderBy('created_at', 'desc')->get();
+        $dataTugas  = tbl_tugas::where('id_kelas', $id_class)->orderBy('created_at', 'desc')->get();
 
         return view('pages.teacher.kelas.detail', [
-            'datakelas' => $dataClass,
-            'datamateri' => $dataMateri
+            'datakelas'     => $dataClass,
+            'datamateri'    => $dataMateri,
+            'dataTugas'     => $dataTugas,
         ]);
     }
 

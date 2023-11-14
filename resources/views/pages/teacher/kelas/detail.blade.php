@@ -54,18 +54,50 @@
                     </ul>
                 </div>
             </div>
-           <div class="w-75 m-2">
-                <div class="card p-2 mb-2">
-                    <a href="{{ route('teacher.create.materi', ['id' => $datakelas->id, 'guru_id' => $datakelas->guru_id]) }}" class="small mb-4">Tambahkan sesuatu pada kelas anda</a>
+           <div class="m-2" style="width: 73%;">
+                <div class="border-1 p-2 mb-2 d-flex flex-wrap justify-content-between">
+                    <div style="width: 49%">
+                        <a class="btn btn-primary me-2 d-block" href="{{ route('teacher.create.materi', ['id' => $datakelas->id, 'guru_id' => $datakelas->guru_id]) }}" class="small mb-4">Tambah Materi</a>
+                    </div>
+                    <div style="width: 49%">
+                        <a class="btn btn-primary me-2 d-block" href="{{ route('teacher.create.tugas', ['id_kelas' => $datakelas->id, 'id_guru' => $datakelas->guru_id]) }}" class="small mb-4">Tambah Tugas</a>
+                    </div>
                 </div>
-                @foreach ($datamateri as $item)
-                <div class="card p-2 mb-2">
-                    <h3>{{ $item->title_materi }}</h3>
-                    <h6 class="card-subtitle mb-2 text-muted">{{ $item->description_materi }}</h6>
-                </div>
-                @endforeach
-               <div class="card p-2">
-                   <h3>Materi Pertama</h3>
+               <hr class="mb-3 mt-3" />
+               <nav>
+                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                       <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-materi" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Daftar Materi</button>
+                       <button class="nav-link" id="nav-disabled-tab" data-bs-toggle="tab" data-bs-target="#nav-tugas" type="button" role="tab" aria-controls="nav-disabled" aria-selected="true">Daftar Tugas</button>
+                   </div>
+               </nav>
+               <div class="tab-content" id="nav-tabContent">
+                   {{-- Daftar Materi --}}
+                   <div class="tab-pane fade show active" id="nav-materi" role="tabpanel" aria-labelledby="nav-materi-tab" tabindex="0">
+                       @forelse ($datamateri as $item)
+                           <div class="card p-2 mb-2 mt-2">
+                               <h3 class="mb-3">{{ $item->title_materi }}</h3>
+                               <h6 class="casrd-subtitle mb-2 text-justify">{{ $item->description_materi }}</h6>
+                           </div>
+                       @empty
+                           <div class="card mb-2 mt-4 bg-danger">
+                               <p class="text-white text-center align-content-center pt-2">Belum Ada Materi</p>
+                           </div>
+                       @endforelse
+                   </div>
+
+                   {{-- Daftar Tugas --}}
+                   <div class="tab-pane fade" id="nav-tugas" role="tabpanel" aria-labelledby="nav-tugas-tab" tabindex="0">
+                       @forelse($dataTugas as $item)
+                           <div class="card p-3 mb-2 mt-2">
+                               <h3 class="mb-3">{{ $item->judul_tugas }}</h3>
+                               <p class="card-subtitle mb-2 mt-2 text-justify">{{ $item->deskripsi_tugas }}</p>
+                           </div>
+                       @empty
+                           <div class="card mb-2 mt-4 bg-danger">
+                               <p class="text-white text-center align-content-center pt-2">Belum Ada Tugas</p>
+                           </div>
+                       @endforelse
+                   </div>
                </div>
            </div>
        </div>
