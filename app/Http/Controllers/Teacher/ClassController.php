@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ClassController extends Controller
@@ -92,5 +93,9 @@ class ClassController extends Controller
         if ($destroyClass) {
             return redirect()->route('teacher.class')->with('success', 'Berhasil Menghapus Kelas');
         } return redirect()->route('teacher.class')->with('danger', 'Whoops!! Terjadi Kesalahan, Silakan coba kembali.');
+    }
+
+    public function downloadFileMateri($fileName, $id_kelas, $id_guru){
+        return Storage::download('public/' . $id_guru .'/'. $id_kelas . '/materi/' . $fileName);
     }
 }

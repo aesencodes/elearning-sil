@@ -77,6 +77,9 @@
                            <div class="card p-2 mb-2 mt-2">
                                <h3 class="mb-3">{{ $item->title_materi }}</h3>
                                <h6 class="casrd-subtitle mb-2 text-justify">{{ $item->description_materi }}</h6>
+                               @if($item->file_name_materi != null)
+                                   <a class="mt-3" href="{{ route('teacher.download.materi', ['file_name' => $item->file_name_materi, 'id_guru' => $datakelas->guru_id, 'id_kelas' => $datakelas->id]) }}">Download Berkas Materi</a>
+                               @endif
                            </div>
                        @empty
                            <div class="card mb-2 mt-4 bg-danger">

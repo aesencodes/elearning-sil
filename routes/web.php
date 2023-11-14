@@ -12,6 +12,7 @@ use App\Http\Controllers\Student\DashboardController as StudentDashboardControll
 use App\Http\Controllers\Teacher\DashboardController as TeacherDashboardController;
 use App\Http\Controllers\Teacher\MateriController;
 use App\Http\Controllers\Student\ClassController as StudentClassController;
+use App\Http\Controllers\Teacher\ClassController as TeacherClassController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -48,6 +49,7 @@ Route::get('/', function () {
 
 Route::prefix('dashboard')->group(function () {
     Route::get('download/tugas/{file_name}/{id_kelas}/{id_guru}',       [TugasController::class, 'downloadFileTugas'])->name('teacher.download.tugas');
+    Route::get('download/materi/{file_name}/{id_kelas}/{id_guru}',       [TeacherClassController::class, 'downloadFileMateri'])->name('teacher.download.materi');
 
     Route::middleware(['isStudent'])->group(function () {
         route::prefix('student')->group(function () {

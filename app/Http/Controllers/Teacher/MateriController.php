@@ -42,14 +42,14 @@ class MateriController extends Controller
         ]);
 
         $fileName = time().'.'.$request->file('file')->extension();
-        $fileDir = 'public/' . $request->guru_id .'/'. $request->id . '/materi/' . $fileName;
+        $fileDir = 'public/' . $request->guru_id .'/'. $request->id . '/materi/';
 
         Storage::putFileAs($fileDir, $request->file('file'), $fileName);
 
         $create_materi = tbl_materi::create([
             'title_materi'          => $request->name,
             'description_materi'    => $request->desc,
-            'file_name_materi'      => $request->file,
+            'file_name_materi'      => $fileName,
             'kelas_id'              => $request->id,
             'guru_id'               => $request->guru_id
         ]);
