@@ -41,8 +41,6 @@ class MateriController extends Controller
             'guru_id'   => 'required'
         ]);
 
-        return $request;
-
         $fileName = time().'.'.$request->file('file')->extension();
         $fileDir = 'public/' . $request->guru_id .'/'. $request->id . '/materi/' . $fileName;
 

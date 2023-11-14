@@ -37,10 +37,14 @@ class TugasController extends Controller
             'id_guru'           => 'required'
         ]);
 
-        $fileName = time() . '_' . $req->file('file')->extension();
-        $fileDir = 'public/' . $req->id_guru .'/'. $req->id_kelas . '/tugas/';
+        $fileName = null;
 
-        Storage::putFileAs($fileDir, $req->file('file'), $fileName);
+        if ($req->file != null) {
+            $fileName = time() . '.' . $req->file('file')->extension();
+            $fileDir = 'public/' . $req->id_guru .'/'. $req->id_kelas . '/tugas/';
+
+            Storage::putFileAs($fileDir, $req->file('file'), $fileName);
+        }
 
         $create_tugas = tbl_tugas::create([
             'judul_tugas'       => $req->judul_tugas,
@@ -53,6 +57,10 @@ class TugasController extends Controller
         if ($create_tugas) {
             return redirect()->route('teacher.detail.class', ['id' => $req->id_kelas])->with('success', 'Berhasil Membuat Kelas');
         } return redirect()->back()->with('danger', 'Whoops!! Terjadi Kesalahan, Silakan coba kembali.');
+    }
+
+    public function downloadFileTugas($fileName, $id_kelas, $id_guru){
+        return Storage::download('public/' . $id_guru .'/'. $id_kelas . '/tugas/' . $fileName);
     }
 
 }

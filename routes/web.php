@@ -72,8 +72,9 @@ Route::prefix('dashboard')->group(function () {
             Route::delete('delete-class/{id}',                  [ClassController::class, 'destroyClass'])->name('teacher.delete.class');
 
             // Tugas
-            Route::get('create/tugas/{id_kelas}/{id_guru}',     [TugasController::class, 'viewCreateTugas'])->name('teacher.create.tugas');
-            Route::post('create_dtugas',                         [TugasController::class, 'createTugas'])->name('teacher.create.post.tugas');
+            Route::get('create/tugas/{id_kelas}/{id_guru}',         [TugasController::class, 'viewCreateTugas'])->name('teacher.create.tugas');
+            Route::post('create_dtugas',                            [TugasController::class, 'createTugas'])->name('teacher.create.post.tugas');
+            Route::get('download/tugas/{file_name}/{id_kelas}/{id_guru}',       [TugasController::class, 'downloadFileTugas'])->name('teacher.download.tugas');
 
             // Materi
             Route::get('create/materi/{id}/{guru_id}',          [MateriController::class, 'create'])->name('teacher.create.materi');
