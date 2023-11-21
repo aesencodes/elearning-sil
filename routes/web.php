@@ -1,18 +1,21 @@
 <?php
 
-use App\Http\Controllers\Teacher\ClassController;
-use App\Http\Controllers\Teacher\TugasController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\loginController;
-use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\Admin\StudentController;
-use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
-use App\Http\Controllers\Teacher\DashboardController as TeacherDashboardController;
+use App\Http\Controllers\Admin\TeacherController;
+use App\Http\Controllers\Student\UjianController;
+use App\Http\Controllers\Teacher\ClassController;
+use App\Http\Controllers\Teacher\TugasController;
 use App\Http\Controllers\Teacher\MateriController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Student\ClassController as StudentClassController;
 use App\Http\Controllers\Teacher\ClassController as TeacherClassController;
+use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
+use App\Http\Controllers\Teacher\DashboardController as TeacherDashboardController;
+use App\Http\Controllers\Student\UjianController as StudentUjianController;
+use App\Http\Controllers\Teacher\UjianController as TeacherUjianController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -82,6 +85,10 @@ Route::prefix('dashboard')->group(function () {
             // Materi
             Route::get('create/materi/{id}/{guru_id}',          [MateriController::class, 'create'])->name('teacher.create.materi');
             Route::post('create-materi',                        [MateriController::class, 'store'])->name('teacher.create.post.materi');
+            
+            // Ujian
+            Route::get('create/ujian/{id}/{guru_id}',          [TeacherUjianController::class, 'viewCreateUjian'])->name('teacher.create.ujian');
+            Route::post('create-ujian',                        [TeacherUjianController::class, 'createUjian'])->name('teacher.create.post.ujian');
         });
     });
 

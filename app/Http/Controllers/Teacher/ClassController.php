@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\tbl_kelas;
 use App\Models\tbl_materi;
 use App\Models\tbl_tugas;
+use App\Models\tbl_ujian;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -54,11 +55,13 @@ class ClassController extends Controller
         $dataClass  = tbl_kelas::where('id', $id_class)->first();
         $dataMateri = tbl_materi::where('kelas_id', $id_class)->orderBy('created_at', 'desc')->get();
         $dataTugas  = tbl_tugas::where('id_kelas', $id_class)->orderBy('created_at', 'desc')->get();
+        $dataUjian  = tbl_ujian::where('kelas_id', $id_class)->orderBy('created_at', 'desc')->get();
 
         return view('pages.teacher.kelas.detail', [
             'datakelas'     => $dataClass,
             'datamateri'    => $dataMateri,
             'dataTugas'     => $dataTugas,
+            'dataUjian'     => $dataUjian,
         ]);
     }
 

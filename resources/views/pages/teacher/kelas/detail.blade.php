@@ -56,11 +56,14 @@
             </div>
            <div class="m-2" style="width: 73%;">
                 <div class="border-1 p-2 mb-2 d-flex flex-wrap justify-content-between">
-                    <div style="width: 49%">
+                    <div style="width: 33%">
                         <a class="btn btn-primary me-2 d-block" href="{{ route('teacher.create.materi', ['id' => $datakelas->id, 'guru_id' => $datakelas->guru_id]) }}" class="small mb-4">Tambah Materi</a>
                     </div>
-                    <div style="width: 49%">
+                    <div style="width: 33%">
                         <a class="btn btn-primary me-2 d-block" href="{{ route('teacher.create.tugas', ['id_kelas' => $datakelas->id, 'id_guru' => $datakelas->guru_id]) }}" class="small mb-4">Tambah Tugas</a>
+                    </div>
+                    <div style="width: 33%">
+                        <a class="btn btn-primary me-2 d-block" href="{{ route('teacher.create.ujian', ['id' => $datakelas->id, 'guru_id' => $datakelas->guru_id]) }}" class="small mb-4">Tambah Ujian</a>
                     </div>
                 </div>
                <hr class="mb-3 mt-3" />
@@ -68,6 +71,7 @@
                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
                        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-materi" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Daftar Materi</button>
                        <button class="nav-link" id="nav-disabled-tab" data-bs-toggle="tab" data-bs-target="#nav-tugas" type="button" role="tab" aria-controls="nav-disabled" aria-selected="true">Daftar Tugas</button>
+                       <button class="nav-link" id="nav-disabled-tab" data-bs-toggle="tab" data-bs-target="#nav-ujian" type="button" role="tab" aria-controls="nav-disabled" aria-selected="true">Daftar Ujian</button>
                    </div>
                </nav>
                <div class="tab-content" id="nav-tabContent">
@@ -101,6 +105,23 @@
                        @empty
                            <div class="card mb-2 mt-4 bg-danger">
                                <p class="text-white text-center align-content-center pt-2">Belum Ada Tugas</p>
+                           </div>
+                       @endforelse
+                   </div>
+
+                   {{-- Daftar Ujian --}}
+                   <div class="tab-pane fade" id="nav-tugas" role="tabpanel" aria-labelledby="nav-ujian-tab" tabindex="0">
+                       @forelse($dataUjian as $item)
+                           <div class="card p-3 mb-2 mt-2">
+                               <h3 class="mb-3">{{ $item->judul_ujian }}</h3>
+                               <p class="card-subtitle mb-2 mt-2 text-justify">{{ $item->deskripsi_ujian }}</p>
+                               @if($item->file_upload_tugas != null)
+                                   <a class="mt-3" href="{{ route('teacher.download.ujian', ['file_name' => $item->file_upload_ujian, 'id_guru' => $datakelas->guru_id, 'id_kelas' => $datakelas->id]) }}">Download Berkas Tugas</a>
+                               @endif
+                           </div>
+                       @empty
+                           <div class="card mb-2 mt-4 bg-danger">
+                               <p class="text-white text-center align-content-center pt-2">Belum Ada Ujian</p>
                            </div>
                        @endforelse
                    </div>
