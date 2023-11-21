@@ -7,6 +7,7 @@ use App\Models\tbl_kelas;
 use App\Models\tbl_kelas_siswa;
 use App\Models\tbl_materi;
 use App\Models\tbl_tugas;
+use App\Models\tbl_ujian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -27,11 +28,13 @@ class ClassController extends Controller
         $detailClass = tbl_kelas::where('id', $id_class)->first();
         $dataMateri = tbl_materi::where('kelas_id', $id_class)->orderBy('created_at', 'desc')->get();
         $dataTugas  = tbl_tugas::where('id_kelas', $id_class)->orderBy('created_at', 'desc')->get();
+        $dataUjian  = tbl_ujian::where('kelas_id', $id_class)->orderBy('created_at', 'desc')->get();
 
         return view('pages.student.kelas.detail', [
             'datakelas' => $detailClass,
             'datamateri'    => $dataMateri,
             'dataTugas'     => $dataTugas,
+            'dataUjian'     => $dataUjian
         ]);
     }
 
