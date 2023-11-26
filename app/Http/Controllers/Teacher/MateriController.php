@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Teacher;
 
+use App\Models\tbl_comment_materi;
 use Illuminate\View\View;
 use App\Models\tbl_materi;
 use Illuminate\Http\Request;
@@ -90,5 +91,22 @@ class MateriController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function comment_materi(Request $req) {
+        $req->validate([
+            'comment_materi' => 'required'
+        ]);
+
+        $create_comment_materi = tbl_comment_materi::create([
+            'user_id'       => $req->user_id,
+            'kelas_id'      => $req->kelas_id,
+            'materi_id'     => $req->materi_id,
+            'comment'       => $req->comment_materi,
+        ]);
+
+        if ($create_comment_materi) {
+            return redirect()->back()->with('success', 'Berhasil Menambahkan Komentar');
+        } return redirect()->back()->with('danger', 'Terjadi Kesalahan, Silakan coba kembali');
     }
 }

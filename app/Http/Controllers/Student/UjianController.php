@@ -34,7 +34,6 @@ class UjianController extends Controller
         if ($create_ujian) {
             return redirect()->back()->with('success', 'Berhasil Upload Jawaban Ujian');
         } return redirect()->back()->with('danger', 'Whoops!! Terjadi Kesalahan, Silakan coba kembali.');
-
     }
 
     public function downloadFileMateri($fileName, $id_kelas, $id_guru){

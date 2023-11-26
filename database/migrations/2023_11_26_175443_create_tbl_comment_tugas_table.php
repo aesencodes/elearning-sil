@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tbl_comment_materis', function (Blueprint $table) {
+        Schema::create('tbl_comment_tugas', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id');
             $table->foreignUuid('kelas_id');
-            $table->foreignUuid('materi_id');
+            $table->foreignUuid('tugas_id');
             $table->longText('comment');
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tbl_comment_materis');
+        Schema::dropIfExists('tbl_comment_tugas');
     }
 };

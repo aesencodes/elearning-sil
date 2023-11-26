@@ -45,4 +45,12 @@ class tbl_kelas extends Model
         return $this->hasMany(tbl_tugas::class, 'id_kelas');
     }
 
+    public function comment_materi() {
+        return $this->hasMany(tbl_comment_materi::class, 'kelas_id');
+    }
+
+    public function comment_tugas() {
+        return $this->hasMany(tbl_comment_tugas::class, 'kelas_id');
+    }
+
 }

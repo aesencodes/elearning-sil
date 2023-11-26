@@ -70,6 +70,10 @@ class User extends Authenticatable
         return $this->hasMany(tbl_comment_materi::class, 'user_id');
     }
 
+    public function comment_tugas() {
+        return $this->hasMany(tbl_comment_tugas::class, 'user_id');
+    }
+
     public function list_student_inClass() {
         return $this->hasMany(tbl_kelas_siswa::class, 'siswa_id');
     }

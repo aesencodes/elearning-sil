@@ -49,10 +49,14 @@ Route::get('/', function () {
 
 
 Route::prefix('dashboard')->group(function () {
+    // Download File
     Route::get('download/tugas/{file_name}/{id_kelas}/{id_guru}',       [TugasController::class, 'downloadFileTugas'])->name('teacher.download.tugas');
     Route::get('download/materi/{file_name}/{id_kelas}/{id_guru}',       [TeacherClassController::class, 'downloadFileMateri'])->name('teacher.download.materi');
-
     Route::get('download/ujian/{file_name}/{id_kelas}/{id_guru}',       [UjianController::class, 'downloadFileMateri'])->name('student.download.ujian');
+
+    //comment
+    Route::post('comment-materi',                       [MateriController::class, 'comment_materi'])->name('send.comment.materi');
+    Route::post('comment-tugas',                        [TugasController::class, 'comment_tugas'])->name('send.comment.tugas');
 
     Route::middleware(['isStudent'])->group(function () {
         route::prefix('student')->group(function () {
@@ -64,6 +68,7 @@ Route::prefix('dashboard')->group(function () {
             Route::get('class/{id}',            [StudentClassController::class, 'viewDetailClass'])->name('student.detail.class');
 
             // Ujian
+            Route::post('tugas/upload_answer',   [StudentClassController::class, 'upload_jawaban_tugas'])->name('student.upload.answer.tugas');
             Route::post('ujian/upload_answer',   [UjianController::class, 'upload_jawaban'])->name('student.upload.answer.test');
         });
     });
