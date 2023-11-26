@@ -7,9 +7,11 @@ use App\Models\tbl_kelas;
 use App\Models\tbl_kelas_siswa;
 use App\Models\tbl_materi;
 use App\Models\tbl_tugas;
+use App\Models\tbl_ujian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ClassController extends Controller
 {
@@ -24,14 +26,16 @@ class ClassController extends Controller
     }
 
     public function viewDetailClass($id_class){
-        $detailClass = tbl_kelas::where('id', $id_class)->first();
-        $dataMateri = tbl_materi::where('kelas_id', $id_class)->orderBy('created_at', 'desc')->get();
-        $dataTugas  = tbl_tugas::where('id_kelas', $id_class)->orderBy('created_at', 'desc')->get();
+        $detailClass = tbl_kelas::findOrFail($id_class);
+        $dataMateri = tbl_materi::where('kelas_id', $id_class)->orderBy('created_at', 'desc')->with('comment_materi')->get();
+        $dataTugas  = tbl_tugas::where('id_kelas', $id_class)->orderBy('created_at', 'desc')->with('comment_tugas')->get();
+        $dataUjian  = tbl_ujian::where('kelas_id', $id_class)->orderBy('created_at', 'desc')->get();
 
         return view('pages.student.kelas.detail', [
             'datakelas' => $detailClass,
             'datamateri'    => $dataMateri,
             'dataTugas'     => $dataTugas,
+            'dataUjian'     => $dataUjian
         ]);
     }
 
@@ -70,6 +74,30 @@ class ClassController extends Controller
                 return redirect()->route('student.class')->with('success', "Berhasil Bergabung dalam kelas");
             } return redirect()->route('student.class')->with('danger', "Gagal bergabung dalam kelas, Silakan coba kembali.");
         } return redirect()->route('student.class')->with('danger', "Kamu telah bergabung dengan kelas tersebut.");
+    }
 
+    public function upload_jawaban_tugas(Request $req) {
+        $req->validate([
+            'file'              => 'required|file|mimes:pdf,docx|max:2048',
+            'description'       => 'required',
+        ]);
+
+        if ($req->file != null) {
+            $fileName = time() . '.' . $req->file('file')->extension();
+            $fileDir = 'public/' . $req->id_guru .'/'. $req->id_kelas . '/ujian/jawaban/';
+
+            Storage::putFileAs($fileDir, $req->file('file'), $fileName);
+        }
+
+        $create_ujian = tbl_ujian::create([
+            'deskripsi_tugas'           => $req->deskripsi_tugas,
+            'nama_file_jawaban_ujian'   => $fileName,
+            'kelas_id'                  => $req->id_guru,
+            'guru_id'                   => $req->id_kelas,
+        ]);
+
+        if ($create_ujian) {
+            return redirect()->back()->with('success', 'Berhasil Upload Jawaban Ujian');
+        } return redirect()->back()->with('danger', 'Whoops!! Terjadi Kesalahan, Silakan coba kembali.');
     }
 }

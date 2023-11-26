@@ -3,6 +3,13 @@
 
     @include('partials.alert')
 
+    @error('code_class')
+        <div class="alert alert-danger alert-dismissible fade show mg-t-20 mt-3" role="alert">
+            {{ $message }}
+        </div>
+    @enderror
+
+
     <div class="d-flex flex-wrap justify-content-between">
         <div>
             <h1 class="mt-4 ms-2">Daftar Kelas.</h1>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
+use App\Models\tbl_comment_materi;
+use App\Models\tbl_comment_tugas;
 use App\Models\tbl_tugas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -61,6 +63,23 @@ class TugasController extends Controller
 
     public function downloadFileTugas($fileName, $id_kelas, $id_guru){
         return Storage::download('public/' . $id_guru .'/'. $id_kelas . '/tugas/' . $fileName);
+    }
+
+    public function comment_tugas(Request $req) {
+        $req->validate([
+            'comment_materi' => 'required'
+        ]);
+
+        $create_comment_materi = tbl_comment_tugas::create([
+            'user_id'       => $req->user_id,
+            'kelas_id'      => $req->kelas_id,
+            'tugas_id'      => $req->tugas_id,
+            'comment'       => $req->comment_materi,
+        ]);
+
+        if ($create_comment_materi) {
+            return redirect()->back()->with('success', 'Berhasil Menambahkan Komentar');
+        } return redirect()->back()->with('danger', 'Terjadi Kesalahan, Silakan coba kembali');
     }
 
 }

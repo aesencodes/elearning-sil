@@ -30,7 +30,7 @@ class tbl_materi extends Model
         return $this->belongsTo(User::class, 'guru_id');
     }
 
-    public function comment() {
+    public function comment_materi() {
         return $this->hasMany(tbl_comment_materi::class, 'materi_id');
     }
 }
