@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
 use App\Models\tbl_kelas;
+use App\Models\tbl_kelas_siswa;
 use App\Models\tbl_materi;
 use App\Models\tbl_tugas;
 use App\Models\tbl_ujian;
@@ -102,5 +103,26 @@ class ClassController extends Controller
 
     public function downloadFileMateri($fileName, $id_kelas, $id_guru){
         return Storage::download('public/' . $id_guru .'/'. $id_kelas . '/materi/' . $fileName);
+    }
+
+    public function listSiswa($kelas_id) {
+        $querySiswa = tbl_kelas_siswa::where('kelas_id', $kelas_id)->with('siswa');
+        $listSiswa  = $querySiswa->get();
+        $countSiswa = $querySiswa->count();
+        $dataGuru = tbl_kelas::where('id', $kelas_id)->with('guru')->first(['id', 'guru_id']);
+
+        return view('pages.teacher.list_siswa', [
+            'listSiswa'     => $listSiswa,
+            'dataGuru'      => $dataGuru,
+            'countSiswa'    => $countSiswa,
+        ]);
+    }
+
+    public function destroySiswa($id) {
+        $removeSiswa = tbl_kelas_siswa::where('id', $id)->delete();
+
+        if ($removeSiswa) {
+            return redirect()->back()->with('success', 'Berhasil Menghapus Siswa');
+        } return redirect()->back()->with('danger', 'Whoops!! Terjadi Kesalahan, Silakan coba kembali.');
     }
 }

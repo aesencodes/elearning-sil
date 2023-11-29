@@ -23,6 +23,6 @@ class tbl_kelas_siswa extends Model
     }
 
     public function siswa() {
-        return $this->belongsToMany(User::class, 'siswa_id');
+        return $this->belongsTo(User::class, 'siswa_id');
     }
 }

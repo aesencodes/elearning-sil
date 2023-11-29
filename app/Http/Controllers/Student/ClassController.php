@@ -26,17 +26,26 @@ class ClassController extends Controller
     }
 
     public function viewDetailClass($id_class){
-        $detailClass = tbl_kelas::findOrFail($id_class);
-        $dataMateri = tbl_materi::where('kelas_id', $id_class)->orderBy('created_at', 'desc')->with('comment_materi')->get();
-        $dataTugas  = tbl_tugas::where('id_kelas', $id_class)->orderBy('created_at', 'desc')->with('comment_tugas')->get();
-        $dataUjian  = tbl_ujian::where('kelas_id', $id_class)->orderBy('created_at', 'desc')->get();
+        $checkListClass = tbl_kelas_siswa::where([
+            ['kelas_id', $id_class],
+            ['siswa_id', Auth::user()->id]
+        ])->first();
 
-        return view('pages.student.kelas.detail', [
-            'datakelas' => $detailClass,
-            'datamateri'    => $dataMateri,
-            'dataTugas'     => $dataTugas,
-            'dataUjian'     => $dataUjian
-        ]);
+        if($checkListClass != null){
+            $detailClass = tbl_kelas::findOrFail($id_class);
+            $dataMateri = tbl_materi::where('kelas_id', $id_class)->orderBy('created_at', 'desc')->with('comment_materi')->get();
+            $dataTugas  = tbl_tugas::where('id_kelas', $id_class)->orderBy('created_at', 'desc')->with('comment_tugas')->get();
+            $dataUjian  = tbl_ujian::where('kelas_id', $id_class)->orderBy('created_at', 'desc')->get();
+
+            return view('pages.student.kelas.detail', [
+                'datakelas' => $detailClass,
+                'datamateri'    => $dataMateri,
+                'dataTugas'     => $dataTugas,
+                'dataUjian'     => $dataUjian
+            ]);
+        } else {
+            return redirect()->route('student.class')->with('danger', 'Kamu tidak terdaftar dalam kelas.');
+        }
     }
 
     public function joinCLass(Request $req) {

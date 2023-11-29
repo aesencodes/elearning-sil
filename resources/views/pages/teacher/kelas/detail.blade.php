@@ -48,11 +48,8 @@
        <div class="d-flex flex-wrap justify-content-between mt-3">
             <div class="m-2" style="width: 22% !important;">
                 <div class="card p-3">
-                    <h4>Daftar Tugas</h4>
-                    <ul>
-                        <li>Tugas Pertama</li>
-                        <li>Tugas kedua</li>
-                        <li>Tugas ketiga</li>
+                    <ul style="margin-bottom: 0px;">
+                        <li><a href="{{ route('teacher.list.siswa', ['id_kelas' => $datakelas->id]) }}">Daftar Siswa</a></li>
                     </ul>
                 </div>
             </div>

@@ -79,13 +79,15 @@ Route::prefix('dashboard')->group(function () {
             Route::get('/',                                     [TeacherDashboardController::class, 'viewDashboard'])->name('teacher.dashboard');
 
             // Class
-            Route::get('create/class',                          [ClassController::class, 'viewCreateClass'])->name('teacher.create.class');
-            Route::post('create-class',                         [ClassController::class, 'createClass'])->name('teacher.create.post.class');
-            Route::get('view/class',                            [ClassController::class, 'viewClass'])->name('teacher.class');
-            Route::get('class/{id}',                            [ClassController::class, 'viewDetailClass'])->name('teacher.detail.class');
-            Route::get('update/class/{id}',                     [ClassController::class, 'viewUpdateClass'])->name('teacher.update.class');
-            Route::post('update-class',                         [ClassController::class, 'updateClass'])->name('teacher.update.post.class');
-            Route::delete('delete-class/{id}',                  [ClassController::class, 'destroyClass'])->name('teacher.delete.class');
+            Route::get('create/class',                                      [ClassController::class, 'viewCreateClass'])->name('teacher.create.class');
+            Route::post('create-class',                                     [ClassController::class, 'createClass'])->name('teacher.create.post.class');
+            Route::get('view/class',                                        [ClassController::class, 'viewClass'])->name('teacher.class');
+            Route::get('class/{id}',                                        [ClassController::class, 'viewDetailClass'])->name('teacher.detail.class');
+            Route::get('update/class/{id}',                                 [ClassController::class, 'viewUpdateClass'])->name('teacher.update.class');
+            Route::post('update-class',                                     [ClassController::class, 'updateClass'])->name('teacher.update.post.class');
+            Route::delete('delete-class/{id}',                              [ClassController::class, 'destroyClass'])->name('teacher.delete.class');
+            Route::get('/list/siswa/{id_kelas}',                            [ClassController::class, 'listSiswa'])->name('teacher.list.siswa');
+            Route::delete('delete-siswa/{id}',                              [ClassController::class, 'destroySiswa'])->name('teacher.delete.siswa');
 
             // Tugas
             Route::get('create/tugas/{id_kelas}/{id_guru}',         [TugasController::class, 'viewCreateTugas'])->name('teacher.create.tugas');

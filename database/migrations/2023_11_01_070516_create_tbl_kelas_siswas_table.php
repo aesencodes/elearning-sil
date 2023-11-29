@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('kelas_id');
             $table->foreignUuid('siswa_id');
+            $table->foreignUuid('status_siswa_id')->default(1);
             $table->timestamps();
         });
     }

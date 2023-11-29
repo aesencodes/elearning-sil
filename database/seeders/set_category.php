@@ -21,6 +21,12 @@ class set_category extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
+            [
+                'id'    => 2,
+                'name'  => 'Status Siswa',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
         ];
 
         ModelsSet_category::insert($data);

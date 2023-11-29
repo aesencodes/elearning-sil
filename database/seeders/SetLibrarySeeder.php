@@ -40,5 +40,24 @@ class SetLibrarySeeder extends Seeder
         ];
 
         set_library::insert($data);
+
+        $data = [
+            [
+                'id'            => 1,
+                'category_id'   => 2,
+                'name'          => 'Joined',
+                'created_at'    => Carbon::now(),
+                'updated_at'    => Carbon::now(),
+            ],
+            [
+                'id'            => 3,
+                'category_id'   => 2,
+                'name'          => 'Leave',
+                'created_at'    => Carbon::now(),
+                'updated_at'    => Carbon::now(),
+            ],
+        ];
+
+        set_library::insert($data);
     }
 }

@@ -39,6 +39,42 @@ class UserSeeder extends Seeder
             'name' => 'Nama Siswa',
         ]);
 
+        $student = new User();
+        $student->email = 'siswa2@gmail.com';
+        $student->password = Hash::make('123123123');
+        $student->role_id = 199200;
+        $student->save();
+
+        tbl_siswa::create([
+            'user_id' => $student->id,
+            'nis' => 98712343,
+            'name' => 'Nama Siswa 2',
+        ]);
+
+        $student = new User();
+        $student->email = 'siswa3@gmail.com';
+        $student->password = Hash::make('123123123');
+        $student->role_id = 199200;
+        $student->save();
+
+        tbl_siswa::create([
+            'user_id' => $student->id,
+            'nis' => 87612332,
+            'name' => 'Nama Siswa 3',
+        ]);
+
+        $student = new User();
+        $student->email = 'siswa4@gmail.com';
+        $student->password = Hash::make('123123123');
+        $student->role_id = 199200;
+        $student->save();
+
+        tbl_siswa::create([
+            'user_id' => $student->id,
+            'nis' => 29812345,
+            'name' => 'Nama Siswa 4',
+        ]);
+
         // Admin
         $admin = new User();
         $admin->email = 'asd@gmail.com';
