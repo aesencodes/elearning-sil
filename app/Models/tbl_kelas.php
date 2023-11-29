@@ -16,6 +16,7 @@ class tbl_kelas extends Model
         'code_class',
         'name_class',
         'description_class',
+        'class_schedule',
     ];
     protected $keyType = 'string';
     public $incrementing = false;

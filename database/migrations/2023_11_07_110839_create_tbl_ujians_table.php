@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('judul_ujian');
             $table->longText('description');
             $table->longText('nama_file_ujian');
+            $table->dateTime('deadline');
             $table->timestamps();
         });
     }

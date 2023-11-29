@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('code_class');
             $table->string('name_class');
             $table->string('description_class');
+            $table->string('class_schedule');
             $table->timestamps();
         });
     }

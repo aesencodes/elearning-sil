@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('judul_tugas');
             $table->longText('deskripsi_tugas');
             $table->longText('file_upload_tugas')->nullable();
+            $table->dateTime('deadline');
             $table->timestamps();
         });
     }

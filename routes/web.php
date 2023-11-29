@@ -14,6 +14,7 @@ use App\Http\Controllers\Teacher\MateriController;
 use App\Http\Controllers\Student\ClassController as StudentClassController;
 use App\Http\Controllers\Teacher\ClassController as TeacherClassController;
 use App\Http\Controllers\Student\UjianController;
+use App\Http\Controllers\Teacher\UjianController as TeacherUjianController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,9 +51,9 @@ Route::get('/', function () {
 
 Route::prefix('dashboard')->group(function () {
     // Download File
-    Route::get('download/tugas/{file_name}/{id_kelas}/{id_guru}',       [TugasController::class, 'downloadFileTugas'])->name('teacher.download.tugas');
-    Route::get('download/materi/{file_name}/{id_kelas}/{id_guru}',       [TeacherClassController::class, 'downloadFileMateri'])->name('teacher.download.materi');
-    Route::get('download/ujian/{file_name}/{id_kelas}/{id_guru}',       [UjianController::class, 'downloadFileMateri'])->name('student.download.ujian');
+    Route::get('download/tugas/{file_name}/{id_kelas}/{id_guru}',           [TugasController::class, 'downloadFileTugas'])->name('teacher.download.tugas');
+    Route::get('download/materi/{file_name}/{id_kelas}/{id_guru}',          [TeacherClassController::class, 'downloadFileMateri'])->name('teacher.download.materi');
+    Route::get('download/ujian/{file_name}/{id_kelas}/{id_guru}',           [UjianController::class, 'downloadFileMateri'])->name('student.download.ujian');
 
     //comment
     Route::post('comment-materi',                       [MateriController::class, 'comment_materi'])->name('send.comment.materi');
@@ -89,10 +90,18 @@ Route::prefix('dashboard')->group(function () {
             // Tugas
             Route::get('create/tugas/{id_kelas}/{id_guru}',         [TugasController::class, 'viewCreateTugas'])->name('teacher.create.tugas');
             Route::post('create_dtugas',                            [TugasController::class, 'createTugas'])->name('teacher.create.post.tugas');
+            Route::get('update/tugas/{id}',                         [TugasController::class, 'viewUpdateTugas'])->name('teacher.update.tugas');
+            Route::post('update/tugas/',                            [TugasController::class, 'updateTugas'])->name('teacher.update.tugas.post');
+            Route::delete('delete-tugas/{id}',                      [TugasController::class, 'destroyTugas'])->name('teacher.delete.tugas');
 
             // Materi
             Route::get('create/materi/{id}/{guru_id}',          [MateriController::class, 'create'])->name('teacher.create.materi');
             Route::post('create-materi',                        [MateriController::class, 'store'])->name('teacher.create.post.materi');
+
+            // Ujian
+            Route::get('create/ujian/{id_kelas}/{id_guru}',     [TeacherUjianController::class, 'viewCreateUjian'])->name('teacher.create.ujian');
+            Route::post('create-ujian',                         [TeacherUjianController::class, 'createUjian'])->name('teacher.create.ujian.post');
+
         });
     });
 

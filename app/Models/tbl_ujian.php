@@ -16,7 +16,8 @@ class tbl_ujian extends Model
         'guru_id',
         'judul_ujian',
         'description',
-        'name_file_ujian',
+        'nama_file_ujian',
+        'deadline'
     ];
     protected $keyType = 'string';
     public $incrementing = false;

@@ -15,10 +15,11 @@ class tbl_tugas extends Model
     protected $fillable =[
         'id',
         'id_guru',
+        'id_kelas',
+        'deadline',
         'judul_tugas',
         'deskripsi_tugas',
         'file_upload_tugas',
-        'id_kelas'
     ];
     protected $keyType = 'string';
     public $incrementing = false;
