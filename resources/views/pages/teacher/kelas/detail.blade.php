@@ -81,7 +81,25 @@
                    <div class="tab-pane fade show active" id="nav-materi" role="tabpanel" aria-labelledby="nav-materi-tab" tabindex="0">
                        @forelse ($datamateri as $item)
                            <div class="card p-3 mb-2 mt-2">
-                               <h3 class="mb-3">{{ $item->title_materi }}</h3>
+                               <div class="d-flex flex-wrap justify-content-between">
+                                   <h3 class="mb-3">{{ $item->title_materi }}</h3>
+
+                                   {{-- Setting Materi --}}
+                                   <div class="dropdown">
+                                       <div class="pointer-event" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;"><i class="fas fa-cog"></i></div>
+                                       <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                                           <li><a class="dropdown-item" href="{{ route('teacher.update.materi', ['id' => $item->id]) }}">Perbarui Materi</a></li>
+                                           <li>
+                                               <form action="{{ route('teacher.delete.materi', $item->id) }}" method="POST">
+                                                   @csrf
+                                                   @method('DELETE')
+                                                   <button type="submit" class="btn btn-danger btn-sm w-100">Delete Materi</button>
+                                               </form>
+                                           </li>
+                                       </ul>
+                                   </div>
+                               </div>
+
                                <h6 class="casrd-subtitle mb-2 text-justify">{{ $item->description_materi }}</h6>
                                @if($item->file_name_materi != null)
                                    <a class="mt-3" href="{{ route('teacher.download.materi', ['file_name' => $item->file_name_materi, 'id_guru' => $datakelas->guru_id, 'id_kelas' => $datakelas->id]) }}">Download Berkas Materi</a>
@@ -212,9 +230,26 @@
                    <div class="tab-pane fade" id="nav-ujian" role="tabpanel" aria-labelledby="nav-ujian-tab" tabindex="0">
                        @forelse ($dataUjian as $item)
                            <div class="card p-3 mb-2 mt-2">
-                               <div>
-                                   <h3 class="mb-3">{{ $item->judul_ujian }}</h3>
-                                   <p style="font-size: 14px;margin-top: -5px;">Batas Waktu Ujian : {{ Carbon::parse($item->deadline)->format('j F Y, g:i A') }}</p>
+                               <div class="d-flex flex-wrap justify-content-between">
+                                   <div>
+                                       <h3 class="mb-3">{{ $item->judul_ujian }}</h3>
+                                       <p style="font-size: 14px;margin-top: -5px;">Batas Waktu Ujian : {{ Carbon::parse($item->deadline)->format('j F Y, g:i A') }}</p>
+                                   </div>
+
+                                   {{-- Setting Ujian --}}
+                                   <div class="dropdown">
+                                       <div class="pointer-event" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;"><i class="fas fa-cog"></i></div>
+                                       <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                                           <li><a class="dropdown-item" href="{{ route('teacher.update.ujian', ['id' => $item->id]) }}">Perbarui Ujian</a></li>
+                                           <li>
+                                               <form action="{{ route('teacher.delete.ujian', $item->id) }}" method="POST">
+                                                   @csrf
+                                                   @method('DELETE')
+                                                   <button type="submit" class="btn btn-danger btn-sm w-100">Delete Tugas</button>
+                                               </form>
+                                           </li>
+                                       </ul>
+                                   </div>
                                </div>
 
                                <h6 class="casrd-subtitle mb-2 text-justify">{{ $item->description }}</h6>

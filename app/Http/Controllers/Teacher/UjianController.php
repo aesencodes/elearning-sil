@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Teacher;
 use App\Http\Controllers\Controller;
 use App\Models\tbl_ujian;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class UjianController extends Controller
@@ -45,6 +46,62 @@ class UjianController extends Controller
 
         if ($createUjian) {
             return redirect()->route('teacher.detail.class', ['id' => $req->id_kelas])->with('success', 'Berhasil Membuat Ujian');
+        } return redirect()->back()->with('danger', 'Whoops!! Terjadi Kesalahan, Silakan coba kembali.');
+    }
+
+    public function viewUpdateUjian($id_ujian) {
+        $dataUjian = tbl_ujian::where('id', $id_ujian)->first();
+
+        return view('pages.teacher.ujian.update', [
+            'dataUjian' => $dataUjian
+        ]);
+    }
+
+    public function updateUjian(Request $req) {
+        $req->validate([
+            'judul_ujian'       => 'required',
+            'description'       => 'required',
+            'file'              => 'file|mimes:pdf,docx|max:2048',
+            'deadline'          => 'required',
+        ]);
+
+        $newFileName = $req->old_file;
+        if (File::exists($req->file)){
+            // Delete old file
+            $fileDirOld = 'public/' . $req->id_guru .'/'. $req->id_kelas . '/ujian/' . $req->old_file;
+            Storage::delete($fileDirOld);
+
+            // Upload New File
+            $newFileName = time() . '.' . $req->file('file')->extension();
+            $fileDir = 'public/' . $req->id_guru .'/'. $req->id_kelas . '/ujian/';
+
+            Storage::putFileAs($fileDir, $req->file('file'), $newFileName);
+        }
+
+        $updateUjian = tbl_ujian::where('id', $req->id_ujian)->update([
+            'judul_ujian'       => $req->judul_ujian,
+            'description'       => $req->description,
+            'deadline'          => $req->deadline,
+            'nama_file_ujian'   => $newFileName,
+        ]);
+
+        if ($updateUjian) {
+            return redirect()->route('teacher.detail.class', ['id' => $req->id_kelas])->with('success', 'Berhasil Memperbaharui Ujian');
+        } return redirect()->back()->with('danger', 'Whoops!! Terjadi Kesalahan, Silakan coba kembali.');
+    }
+
+    public function destroyUjian($id_ujian) {
+        $dataUjian = tbl_ujian::where('id', $id_ujian)->first();
+
+        if ($dataUjian->nama_file_ujian != null) {
+            $fileDirOld = 'public/' . $dataUjian->guru_id . '/' . $dataUjian->kelas_id . '/ujian/' . $dataUjian->nama_file_ujian;
+            Storage::delete($fileDirOld);
+        }
+
+        $destroyUjian = tbl_ujian::where('id', $id_ujian)->delete();
+
+        if ($destroyUjian) {
+            return redirect()->back()->with('success', 'Berhasil Menghapus Ujian');
         } return redirect()->back()->with('danger', 'Whoops!! Terjadi Kesalahan, Silakan coba kembali.');
     }
 }

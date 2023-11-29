@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Models\tbl_comment_materi;
+use Illuminate\Support\Facades\File;
 use Illuminate\View\View;
 use App\Models\tbl_materi;
 use Illuminate\Http\Request;
@@ -72,25 +73,67 @@ class MateriController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id_materi)
     {
-        //
+        $dataMateri = tbl_materi::where('id', $id_materi)->first();
+
+        return view('pages.teacher.materi.update', [
+            'dataMateri'    => $dataMateri,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $req)
     {
-        //
+        $req->validate([
+            'name'      => 'required|string',
+            'desc'      => 'required|string',
+            'file'      => 'required|file|mimes:pdf,docx|max:2048',
+        ]);
+
+        $newFileName = $req->old_file;
+        if (File::exists($req->file)){
+            // Delete old file
+            $fileDirOld = 'public/' . $req->id_guru .'/'. $req->id_kelas . '/materi/' . $req->old_file;
+            Storage::delete($fileDirOld);
+
+            // Upload New File
+            $newFileName = time() . '.' . $req->file('file')->extension();
+            $fileDir = 'public/' . $req->id_guru .'/'. $req->id_kelas . '/materi/';
+
+            Storage::putFileAs($fileDir, $req->file('file'), $newFileName);
+        }
+
+        $updateMateri = tbl_materi::where('id', $req->id_materi)->update([
+            'title_materi'          => $req->name,
+            'description_materi'    => $req->desc,
+            'file_name_materi'      => $newFileName,
+        ]);
+
+        if ($updateMateri) {
+            return redirect()->route('teacher.detail.class', ['id' => $req->id_kelas])->with('success', 'Berhasil Memperbarui Materi');
+        } return redirect()->back()->with('danger', 'Whoops!! Terjadi Kesalahan, Silakan coba kembali.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id_materi)
     {
-        //
+        $dataMateri = tbl_materi::where('id', $id_materi)->first();
+
+        if ($dataMateri->file_name_materi != null) {
+            $fileDirOld = 'public/' . $dataMateri->guru_id . '/' . $dataMateri->kelas_id . '/materi/' . $dataMateri->file_name_materi;
+            Storage::delete($fileDirOld);
+        }
+
+        $deleteMateri = tbl_materi::where('id', $id_materi)->delete();
+
+        if ($deleteMateri) {
+            return redirect()->back()->with('success', 'Berhasil Menghapus Materi');
+        } return redirect()->back()->with('danger', 'Whoops!! Terjadi Kesalahan, Silakan coba kembali.');
     }
 
     public function comment_materi(Request $req) {

@@ -103,7 +103,7 @@ class TugasController extends Controller
             'deadline'          => 'required',
         ]);
 
-        $newFileName = null;
+        $newFileName = $req->old_file;
         if (File::exists($req->file)){
             // Delete old file
             $fileDirOld = 'public/' . $req->id_guru .'/'. $req->id_kelas . '/tugas/' . $req->old_file;
@@ -129,6 +129,13 @@ class TugasController extends Controller
     }
 
     public function destroyTugas($id_tugas) {
+        $dataTugas = tbl_tugas::where('id', $id_tugas)->first();
+
+        if ($dataTugas->file_upload_tugas != null) {
+            $fileDirOld = 'public/' . $dataTugas->id_guru . '/' . $dataTugas->id_kelas . '/tugas/' . $dataTugas->file_upload_tugas;
+            Storage::delete($fileDirOld);
+        }
+
         $destroytugas = tbl_tugas::where('id', $id_tugas)->delete();
 
         if ($destroytugas) {

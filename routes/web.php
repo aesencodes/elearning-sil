@@ -97,10 +97,16 @@ Route::prefix('dashboard')->group(function () {
             // Materi
             Route::get('create/materi/{id}/{guru_id}',          [MateriController::class, 'create'])->name('teacher.create.materi');
             Route::post('create-materi',                        [MateriController::class, 'store'])->name('teacher.create.post.materi');
+            Route::get('update/materi/{id}',                    [MateriController::class, 'edit'])->name('teacher.update.materi');
+            Route::post('update/materi/',                       [MateriController::class, 'update'])->name('teacher.update.materi.post');
+            Route::delete('delete-materi/{id}',                 [MateriController::class, 'destroy'])->name('teacher.delete.materi');
 
             // Ujian
             Route::get('create/ujian/{id_kelas}/{id_guru}',     [TeacherUjianController::class, 'viewCreateUjian'])->name('teacher.create.ujian');
             Route::post('create-ujian',                         [TeacherUjianController::class, 'createUjian'])->name('teacher.create.ujian.post');
+            Route::get('update/ujian/{id}',                     [TeacherUjianController::class, 'viewUpdateUjian'])->name('teacher.update.ujian');
+            Route::post('update/ujian/',                        [TeacherUjianController::class, 'updateUjian'])->name('teacher.update.ujian.post');
+            Route::delete('delete-ujain/{id}',                  [TeacherUjianController::class, 'destroyUjian'])->name('teacher.delete.ujian');
 
         });
     });
