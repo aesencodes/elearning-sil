@@ -53,34 +53,35 @@ Proyek ini adalah implementasi E-Learning Management System yang terinspirasi da
 ## Cara Menjalankan Proyek
 
 1. Pastikan Anda memiliki lingkungan pengembangan PHP/Laravel yang sesuai (XAMPP dan Composer sudah terinstall).
+
 2. Clone repositori ini ke dalam direktori lokal Anda (Folder htdocs).
     ```bash
     git clone https://github.com/aesencodes/elearning-sil.git
     ```
 3. Install depedency
 
-```bash
-   composer install
-```
+    ```bash
+    composer install
+    ```
 
-4. Setup environtment variabel
+4. Setup environment variabel
 
-```bash
-   cp .env.example .env
-```
+    ```bash
+    cp .env.example .env
+    ```
 
-```bash
-   php artisan key:generate
-```
+    ```bash
+    php artisan key:generate
+    ```
 
 5. Migrate dan Seed
 
-```bash
-   php artisan migrate:fresh --seed
-```
+    ```bash
+    php artisan migrate:fresh --seed
+    ```
 
 6. Run local dev server
 
-```bash
-   php artisan serve
-```
+    ```bash
+    php artisan serve
+    ```
