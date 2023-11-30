@@ -39,7 +39,6 @@
                            @method('DELETE')
                            <button type="submit" class="btn btn-sm btn-danger">Remove</button>
                        </form>
-{{--                       <a href="{{ route('teacher.delete.siswa', ['id' => $items->id]) }}" >remove</a>--}}
                    </div>
                </div>
            @empty

@@ -13,7 +13,7 @@
     </div>
 
     <div class="card p-3">
-        <form action="{{ route('teacher.update.tugas.post') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('teacher.update.tugas.post') }}" method="post" >
             @csrf
             <input type="hidden" name="id_tugas" value="{{ $dataTugas->id }}" style="display: none;">
             <input type="hidden" name="id_kelas" value="{{ $dataTugas->id_kelas }}" style="display: none;">

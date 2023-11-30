@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('tbl_jawaban_tugas', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->unsignedBigInteger('id_tugas')->constrained();
-            $table->unsignedBigInteger('id_siswa')->constrained();
+            $table->foreignUuid('id_tugas');
+            $table->foreignUuid('id_kelas');
+            $table->foreignUuid('id_siswa');
             $table->longText('file_upload_jawab');
-            $table->tinyInteger('nilai');
-            $table->longText('keterangan');
+            $table->tinyInteger('nilai')->nullable();
+            $table->longText('keterangan')->nullable();
             $table->timestamps();
         });
     }

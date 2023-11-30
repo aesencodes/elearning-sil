@@ -14,6 +14,7 @@ class tbl_jawaban_tugas extends Model
     protected $fillable = [
         'id_tugas',
         'id_siswa',
+        'id_kelas',
         'file_upload_jawab',
         'nilai',
         'keterangan',

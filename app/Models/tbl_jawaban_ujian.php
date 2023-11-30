@@ -14,8 +14,9 @@ class tbl_jawaban_ujian extends Model
     protected $fillable = [
         'kelas_id',
         'ujian_id',
-        'judul_ujian',
-        'description',
+        'siswa_id',
+        'nilai',
+        'keterangan',
         'nama_file_jawaban_ujian',
     ];
     protected $keyType = 'string';
@@ -30,4 +31,9 @@ class tbl_jawaban_ujian extends Model
     public function ujian() {
         return $this->belongsTo(tbl_ujian::class, 'ujian_id');
     }
+
+    public function siswa() {
+        return $this->belongsTo(User::class, 'siswa_id');
+    }
+
 }

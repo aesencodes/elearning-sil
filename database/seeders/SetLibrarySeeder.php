@@ -50,7 +50,7 @@ class SetLibrarySeeder extends Seeder
                 'updated_at'    => Carbon::now(),
             ],
             [
-                'id'            => 3,
+                'id'            => 2,
                 'category_id'   => 2,
                 'name'          => 'Leave',
                 'created_at'    => Carbon::now(),

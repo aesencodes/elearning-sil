@@ -1,7 +1,7 @@
 @extends('layouts.default')
 @section('content')
 
-    @include('partials.alert')
+    <?php use Carbon\Carbon; ?>
 
     @section('style')
         <style>
@@ -15,6 +15,8 @@
     @endsection
 
    <div class="container mb-4 mt-4">
+       @include('partials.alert')
+
        {{-- Banner kelas --}}
        <div class="banner p-4 rounded-4 position-relative"
             style="background-image: url('https://www.gstatic.com/classroom/themes/img_reachout.jpg');height: 300px;background-size: cover;">
@@ -22,6 +24,7 @@
                <div class="text-below p-4 text-white">
                    <h1 class="text-capitalize">{{ $datakelas->name_class }}</h1>
                    <p>{{ $datakelas->description_class }}</p>
+                   <div class="border-1" style="margin-top: -10px;"><p>Jadwal Kelas : {{ $datakelas->class_schedule }}</p></div>
                </div>
            </div>
        </div>
@@ -31,8 +34,6 @@
             <div class="m-2" style="width: 22% !important;">
                 <div class="card p-3">
                     <h4>Daftar Tugas</h4>
-                    <ul>
-                    </ul>
                 </div>
             </div>
            <div class="m-2" style="width: 73%;">
@@ -40,7 +41,7 @@
                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
                        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-materi" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Daftar Materi</button>
                        <button class="nav-link" id="nav-disabled-tab" data-bs-toggle="tab" data-bs-target="#nav-tugas" type="button" role="tab" aria-controls="nav-disabled" aria-selected="true">Daftar Tugas</button>
-{{--                       <button class="nav-link" id="nav-disabled-tab" data-bs-toggle="tab" data-bs-target="#nav-ujian" type="button" role="tab" aria-controls="nav-disabled" aria-selected="true">Daftar Ujian</button>--}}
+                       <button class="nav-link" id="nav-disabled-tab" data-bs-toggle="tab" data-bs-target="#nav-ujian" type="button" role="tab" aria-controls="nav-disabled" aria-selected="true">Daftar Ujian</button>
                    </div>
                </nav>
                <div class="tab-content" id="nav-tabContent">
@@ -104,15 +105,49 @@
                    <div class="tab-pane fade" id="nav-tugas" role="tabpanel" aria-labelledby="nav-tugas-tab" tabindex="0">
                        @forelse($dataTugas as $item)
                            <div class="card p-3 mb-2 mt-2">
-                               <h3 class="mb-3">{{ $item->judul_tugas }}</h3>
+                               <div class="title-tugas">
+                                   <h3 class="mb-3">{{ $item->judul_tugas }}</h3>
+                                   <p style="font-size: 14px;margin-top: -5px;">Batas Pengumpulan Tugas : {{ Carbon::parse($item->deadline)->format('j F Y, g:i A') }}</p>
+                               </div>
+
                                <p class="card-subtitle mb-2 mt-2 text-justify">{{ $item->deskripsi_tugas }}</p>
+
                                @if($item->file_upload_tugas != null)
                                    <a class="mt-3" href="{{ route('teacher.download.tugas', ['file_name' => $item->file_upload_tugas, 'id_guru' => $datakelas->guru_id, 'id_kelas' => $datakelas->id]) }}">Download Berkas Tugas</a>
                                @endif
 
                                <hr class="mt-2 mb-3">
+                                <div class="upload-jawaban">
+                                    <form action="{{ route('student.upload.answer.tugas') }}" method="post" style="margin-top: -25px;" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="form-group card p-3 mt-3 w-100">
+                                            <label for="formFile" class="form-label fw-bold">Upload Jawaban</label>
 
-                               <div class="comment p-4">
+                                            <input type="hidden" name="id_kelas" value="{{ $datakelas->id }}" style="display: none;">
+                                            <input type="hidden" name="id_tugas" value="{{ $item->id }}" style="display: none;">
+
+                                            @foreach($item->jawaban_tugas as $jawaban_tugas)
+                                                @if(!empty($jawaban_tugas->file_upload_jawab))
+                                                    <input type="hidden" name="old_file" value="{{ $jawaban_tugas->file_upload_jawab }}" style="display: none;">
+
+                                                    <p style="margin-bottom: -5px">File Jawaban Kamu</p>
+                                                    <a class="d-block mb-3" href="{{ route('student.download.jawaban.tugas', ['id_jawaban' => $jawaban_tugas->id]) }}">{{ $jawaban_tugas->file_upload_jawab }}</a>
+                                                @endif
+                                            @endforeach
+
+                                            <div class="d-flex flex-wrap">
+                                                <input class="form-control me-3" style="width: 88%" type="file" id="formFile" name="file">
+                                                <input type="submit" value="Kirim" style="width: 10%;" class="btn btn-sm btn-primary">
+                                            </div>
+                                            @error('file') <small id="descriptionClass" class="form-text text-muted text-danger" style="color: #c54444 !important">{{ $message }}</small> @enderror
+                                        </div>
+
+                                    </form>
+                                </div>
+
+                               <hr class="mt-2 mb-3">
+
+                               <div class="comment p-2">
                                    <h4 class="mb-3">Komentar.</h4>
 
                                    @forelse($item->comment_tugas as $itemComment)
@@ -156,7 +191,7 @@
                    </div>
 
                    {{-- Daftar Ujian --}}
-                   <div class="tab-pane fade" id="nav-tugas" role="tabpanel" aria-labelledby="nav-tugas-tab" tabindex="0">
+                   <div class="tab-pane fade" id="nav-ujian" role="tabpanel" aria-labelledby="nav-ujian-tab" tabindex="0">
                        @forelse($dataUjian as $item)
                            <div class="card p-3 mb-2 mt-2">
                                <h3 class="mb-3">{{ $item->judul_ujian }}</h3>
@@ -166,27 +201,35 @@
                                @endif
                                <hr class="mt-3 mb-3">
 
-                               <form action="" method="post" enctype="multipart/form-data">
+                               <form action="{{ route('student.upload.answer.ujian') }}" method="post" style="margin-top: -25px;" enctype="multipart/form-data">
                                    @csrf
-                                   <input type="hidden" name="id_kelas" value="{{ $item->kelas_id }}" style="display: none;">
-                                   <input type="hidden" name="id_guru" value="{{ $item->guru_id }}" style="display: none;">
-                                   <div class="form-group mt-2">
-                                       <label for="formFile" class="form-label">Upload Tugas</label>
-                                       <input class="form-control" type="file" id="formFile" name="file">
+                                   <div class="form-group card p-3 mt-3 w-100">
+                                       <label for="formFile" class="form-label fw-bold">Upload Jawaban</label>
 
+                                       <input type="hidden" name="id_kelas" value="{{ $datakelas->id }}" style="display: none;">
+                                       <input type="hidden" name="id_ujian" value="{{ $item->id }}" style="display: none;">
+
+                                       @foreach($item->jawaban_ujian as $jawaban_ujian)
+                                           @if(!empty($jawaban_ujian->nama_file_jawaban_ujian))
+                                               <input type="hidden" name="old_file" value="{{ $jawaban_ujian->nama_file_jawaban_ujian }}" style="display: none;">
+
+                                               <p style="margin-bottom: -5px">File Jawaban Kamu</p>
+                                               <a class="d-block mb-3" href="{{ route('student.download.jawaban.ujian', ['id_jawaban' => $jawaban_ujian->id]) }}">{{ $jawaban_ujian->nama_file_jawaban_ujian }}</a>
+                                           @endif
+                                       @endforeach
+
+                                       <div class="d-flex flex-wrap">
+                                           <input class="form-control me-3" style="width: 88%" type="file" id="formFile" name="file">
+                                           <input type="submit" value="Kirim" style="width: 10%;" class="btn btn-sm btn-primary">
+                                       </div>
                                        @error('file') <small id="descriptionClass" class="form-text text-muted text-danger" style="color: #c54444 !important">{{ $message }}</small> @enderror
                                    </div>
-                                   <div class="form-group mt-3">
-                                       <label for="descriptionClass">Deskripsi Tugas</label>
-                                       <textarea type="text" class="form-control" id="descriptionClass" name="deskripsi_tugas" placeholder="Masukan Tugas."></textarea>
-                                       @error('deskripsi_tugas') <small id="descriptionClass" class="form-text text-muted text-danger" style="color: #c54444 !important">{{ $message }}</small> @enderror
-                                   </div>
-                                   <input type="submit" class="btn btn-primary mt-3" value="Upload Jawaban">
+
                                </form>
                            </div>
                        @empty
                            <div class="card mb-2 mt-4 bg-danger">
-                               <p class="text-white text-center align-content-center pt-2">Belum Ada Tugas</p>
+                               <p class="text-white text-center align-content-center pt-2">Belum Ada Ujian</p>
                            </div>
                        @endforelse
                    </div>

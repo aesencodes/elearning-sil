@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
+use App\Models\tbl_jawaban_tugas;
 use App\Models\tbl_kelas;
 use App\Models\tbl_kelas_siswa;
 use App\Models\tbl_materi;
@@ -11,6 +12,7 @@ use App\Models\tbl_ujian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class ClassController extends Controller
@@ -34,7 +36,7 @@ class ClassController extends Controller
         if($checkListClass != null){
             $detailClass = tbl_kelas::findOrFail($id_class);
             $dataMateri = tbl_materi::where('kelas_id', $id_class)->orderBy('created_at', 'desc')->with('comment_materi')->get();
-            $dataTugas  = tbl_tugas::where('id_kelas', $id_class)->orderBy('created_at', 'desc')->with('comment_tugas')->get();
+            $dataTugas  = tbl_tugas::where('id_kelas', $id_class)->orderBy('created_at', 'desc')->with('comment_tugas', 'jawaban_tugas')->get();
             $dataUjian  = tbl_ujian::where('kelas_id', $id_class)->orderBy('created_at', 'desc')->get();
 
             return view('pages.student.kelas.detail', [
@@ -108,5 +110,58 @@ class ClassController extends Controller
         if ($create_ujian) {
             return redirect()->back()->with('success', 'Berhasil Upload Jawaban Ujian');
         } return redirect()->back()->with('danger', 'Whoops!! Terjadi Kesalahan, Silakan coba kembali.');
+    }
+
+    public function uploadJawabanTugas(Request $req) {
+        $req->validate([
+            'file'              => 'file|mimes:pdf,docx|max:2048',
+        ]);
+
+        $uploadJawaban = null;
+        $newFileName = $req->old_file;
+        $id_siswa = Auth::user()->id;
+        $checkDataReady = tbl_jawaban_tugas::where([
+            ['id_kelas', $req->id_kelas],
+            ['id_tugas', $req->id_tugas],
+            ['id_siswa', $id_siswa]
+        ]);
+
+        if (File::exists($req->file)){
+            if ($checkDataReady->first() != null) {
+                // Delete old file
+                $fileDirOld = 'public/' . $req->id_kelas . '/tugas/jawaban/' . $id_siswa . '/' . $req->old_file;
+                Storage::delete($fileDirOld);
+            }
+
+            // Upload New File
+            $newFileName = time() . '.' . $req->file('file')->extension();
+            $fileDir= 'public/' . $req->id_kelas . '/tugas/jawaban/' . $id_siswa . "/";
+
+            Storage::putFileAs($fileDir, $req->file('file'), $newFileName);
+        }
+
+        if ($checkDataReady->first() == null) {
+            $uploadJawaban = tbl_jawaban_tugas::create([
+                'id_kelas'          => $req->id_kelas,
+                'id_tugas'          => $req->id_tugas,
+                'id_siswa'          => Auth::user()->id,
+                'file_upload_jawab' => $newFileName,
+            ]);
+        } else {
+            $uploadJawaban = $checkDataReady->update([
+                'file_upload_jawab' => $newFileName,
+            ]);
+        }
+
+        if ($uploadJawaban) {
+            return redirect()->back()->with('success', 'Berhasil Upload Jawaban Tugas');
+        } return redirect()->back()->with('danger', 'Whoops!! Terjadi Kesalahan, Silakan coba kembali.');
+    }
+
+    public function downloadJawabanTugas($id_jawaban){
+        $dataJawaban = tbl_jawaban_tugas::findOrFail($id_jawaban);
+
+        $path = 'public/' . $dataJawaban->id_kelas . '/tugas/jawaban/' . $dataJawaban->id_siswa . '/' . $dataJawaban->file_upload_jawab;
+        return Storage::download($path);
     }
 }

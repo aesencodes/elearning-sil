@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('tbl_jawaban_ujians', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('kelas_id');
-            $table->foreignUuid('ujian_id')->nullable();
+            $table->foreignUuid('ujian_id');
+            $table->foreignUuid('siswa_id');
             $table->longText('nama_file_jawaban_ujian');
-            $table->longText('description')->nullable();
+            $table->string('nilai', 5)->nullable();
+            $table->longText('keterangan')->nullable();
             $table->timestamps();
         });
     }

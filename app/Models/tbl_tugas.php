@@ -33,6 +33,10 @@ class tbl_tugas extends Model
         return $this->belongsTo(tbl_kelas::class, 'id_kelas');
     }
 
+    public function jawaban_tugas() {
+        return $this->hasMany(tbl_jawaban_tugas::class, 'id_tugas');
+    }
+
     public function comment_tugas() {
         return $this->hasMany(tbl_comment_tugas::class, 'tugas_id');
     }

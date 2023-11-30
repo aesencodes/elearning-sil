@@ -55,9 +55,13 @@ Route::prefix('dashboard')->group(function () {
     Route::get('download/materi/{file_name}/{id_kelas}/{id_guru}',          [TeacherClassController::class, 'downloadFileMateri'])->name('teacher.download.materi');
     Route::get('download/ujian/{file_name}/{id_kelas}/{id_guru}',           [UjianController::class, 'downloadFileMateri'])->name('student.download.ujian');
 
+    // Download file Jawaban
+    Route::get('download/jawaban/tugas/{id_jawaban}',                      [StudentClassController::class, 'downloadJawabanTugas'])->name('student.download.jawaban.tugas');
+    Route::get('download/jawaban/ujian/{id_jawaban}',                      [UjianController::class, 'downloadJawabanUjian'])->name('student.download.jawaban.ujian');
+
     //comment
     Route::post('comment-materi',                       [MateriController::class, 'comment_materi'])->name('send.comment.materi');
-    Route::post('comment-tugas',                        [TugasController::class, 'comment_tugas'])->name('send.comment.tugas');
+    Route::post('comment-tugas',                        [TugasController::class, 'comment_tugas'])->name('send.commen   t.tugas');
 
     Route::middleware(['isStudent'])->group(function () {
         route::prefix('student')->group(function () {
@@ -68,9 +72,9 @@ Route::prefix('dashboard')->group(function () {
             route::post('join/class',           [StudentClassController::class, 'joinCLass'])->name('student.join.class');
             Route::get('class/{id}',            [StudentClassController::class, 'viewDetailClass'])->name('student.detail.class');
 
-            // Ujian
-            Route::post('tugas/upload_answer',   [StudentClassController::class, 'upload_jawaban_tugas'])->name('student.upload.answer.tugas');
-            Route::post('ujian/upload_answer',   [UjianController::class, 'upload_jawaban'])->name('student.upload.answer.test');
+            // upload_jawaban
+            Route::post('tugas/upload/answer',   [StudentClassController::class, 'uploadJawabanTugas'])->name('student.upload.answer.tugas');
+            Route::post('ujian/upload/answer',   [UjianController::class, 'uploadJawabanUjian'])->name('student.upload.answer.ujian');
         });
     });
 
