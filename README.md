@@ -1,66 +1,86 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# E-Learning Management System (ELMS)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![preview img](./public/img/login.png)
+![preview img](./public/img/kelas.png)
 
-## About Laravel
+## Deskripsi Proyek
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Proyek ini adalah implementasi E-Learning Management System yang terinspirasi dari Google Classroom. Sistem ini dirancang dengan fitur utama untuk memfasilitasi pengelolaan pembelajaran secara online. Terdapat tiga jenis pengguna utama, yaitu Admin, Guru, dan Siswa.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Akun Pengguna
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Admin
 
-## Learning Laravel
+-   Email: asd@gmail.com
+-   Password: asd
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Guru
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+-   Email: guru@gmail.com
+-   Password: 112233
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Siswa
 
-## Laravel Sponsors
+-   Email: siswa@gmail.com
+-   Password: 123123123
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Fitur Utama
 
-### Premium Partners
+### 1. User Privilege
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+-   Admin: memiliki hak akses penuh untuk mengelola seluruh sistem.
+-   Guru: memiliki hak akses untuk membuat materi, tugas, dan ujian, serta menilai hasil tugas dan ujian siswa.
+-   Siswa: memiliki hak akses untuk mengakses materi, mengerjakan tugas dan ujian, serta melihat penilaian yang diberikan oleh guru.
 
-## Contributing
+### 2. Manajemen Materi, Tugas, dan Ujian
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+-   **Materi:** Guru dapat membuat dan mengelola materi pembelajaran yang dapat diakses oleh siswa.
+-   **Tugas:** Guru dapat memberikan tugas kepada siswa, dan siswa dapat mengumpulkan hasil tugas mereka melalui platform ini.
+-   **Ujian:** Guru dapat membuat ujian online, dan siswa dapat mengerjakan ujian tersebut sesuai dengan jadwal yang ditentukan.
 
-## Code of Conduct
+### 3. Penilaian Guru
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+-   Guru dapat memberikan penilaian terhadap hasil tugas dan ujian yang dikumpulkan oleh siswa.
+-   Siswa dapat melihat penilaian mereka pada setiap tugas dan ujian.
 
-## Security Vulnerabilities
+## Tim Pengembang
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+-   **Adjie Surya Nugraha** - 118140146 (Product Owner)
+-   **Yosia Gilbert Wuaten** - 118140174 (Full Stack Developer)
+-   **Nestiawan Ferdiyanto** - 118140190 (Full Stack Developer)
+-   **Rauli Sipakkar** - 120140001 (QA Engineer)
 
-## License
+## Cara Menjalankan Proyek
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. Pastikan Anda memiliki lingkungan pengembangan PHP/Laravel yang sesuai (XAMPP dan Composer sudah terinstall).
+2. Clone repositori ini ke dalam direktori lokal Anda (Folder htdocs).
+    ```bash
+    git clone https://github.com/aesencodes/elearning-sil.git
+    ```
+3. Install depedency
+
+```bash
+   composer install
+```
+
+4. Setup environtment variabel
+
+```bash
+   cp .env.example .env
+```
+
+```bash
+   php artisan key:generate
+```
+
+5. Migrate dan Seed
+
+```bash
+   php artisan migrate:fresh --seed
+```
+
+6. Run local dev server
+
+```bash
+   php artisan serve
+```
