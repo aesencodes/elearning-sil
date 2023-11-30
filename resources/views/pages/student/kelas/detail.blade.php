@@ -113,7 +113,10 @@
                                <p class="card-subtitle mb-2 mt-2 text-justify">{{ $item->deskripsi_tugas }}</p>
 
                                @if($item->file_upload_tugas != null)
-                                   <a class="mt-3" href="{{ route('teacher.download.tugas', ['file_name' => $item->file_upload_tugas, 'id_guru' => $datakelas->guru_id, 'id_kelas' => $datakelas->id]) }}">Download Berkas Tugas</a>
+                                   <a class="mt-1 mb-3 btn btn-sm btn-primary w-25"
+                                      href="{{ route('teacher.download.tugas', ['file_name' => $item->file_upload_tugas, 'id_guru' => $datakelas->guru_id, 'id_kelas' => $datakelas->id]) }}">
+                                       Download Berkas Tugas
+                                   </a>
                                @endif
 
                                <hr class="mt-2 mb-3">
@@ -210,7 +213,10 @@
                                <p class="card-subtitle mb-2 mt-2 text-justify">{{ $item->description }}</p>
 
                                @if($item->nama_file_ujian != null)
-                                   <a class="mt-3" href="{{ route('student.download.ujian', ['id_ujian' => $item->id]) }}">Download Berkas Tugas</a>
+                                   <a class="mt-1 mb-2 btn btn-sm btn-primary w-25"
+                                      href="{{ route('student.download.ujian', ['id_ujian' => $item->id]) }}">
+                                       Download Berkas Tugas
+                                   </a>
                                @endif
 
                                <hr class="mt-3 mb-3">

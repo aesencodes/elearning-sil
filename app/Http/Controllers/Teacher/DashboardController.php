@@ -8,7 +8,7 @@ use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
-    public function viewDashboard(): View {
-        return view('pages.teacher.dashboard');
+    public function viewDashboard() {
+        return redirect()->route('teacher.class');
     }
 }
