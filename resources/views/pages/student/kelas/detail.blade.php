@@ -104,7 +104,7 @@
                    {{-- Daftar Tugas --}}
                    <div class="tab-pane fade" id="nav-tugas" role="tabpanel" aria-labelledby="nav-tugas-tab" tabindex="0">
                        @forelse($dataTugas as $item)
-                           <div class="card p-3 mb-2 mt-2">
+                           <div class="card p-3 mb-2 mt-4">
                                <div class="title-tugas">
                                    <h3 class="mb-3">{{ $item->judul_tugas }}</h3>
                                    <p style="font-size: 14px;margin-top: -5px;">Batas Pengumpulan Tugas : {{ Carbon::parse($item->deadline)->format('j F Y, g:i A') }}</p>
@@ -120,18 +120,30 @@
                                 <div class="upload-jawaban">
                                     <form action="{{ route('student.upload.answer.tugas') }}" method="post" style="margin-top: -25px;" enctype="multipart/form-data">
                                         @csrf
+                                        <input type="hidden" name="id_kelas" value="{{ $datakelas->id }}" style="display: none;">
+                                        <input type="hidden" name="id_tugas" value="{{ $item->id }}" style="display: none;">
+
                                         <div class="form-group card p-3 mt-3 w-100">
                                             <label for="formFile" class="form-label fw-bold">Upload Jawaban</label>
 
-                                            <input type="hidden" name="id_kelas" value="{{ $datakelas->id }}" style="display: none;">
-                                            <input type="hidden" name="id_tugas" value="{{ $item->id }}" style="display: none;">
-
                                             @foreach($item->jawaban_tugas as $jawaban_tugas)
-                                                @if(!empty($jawaban_tugas->file_upload_jawab))
+                                                @if(!empty($jawaban_tugas->file_upload_jawab) AND $jawaban_tugas->id_siswa == Auth::user()->id)
                                                     <input type="hidden" name="old_file" value="{{ $jawaban_tugas->file_upload_jawab }}" style="display: none;">
 
-                                                    <p style="margin-bottom: -5px">File Jawaban Kamu</p>
-                                                    <a class="d-block mb-3" href="{{ route('student.download.jawaban.tugas', ['id_jawaban' => $jawaban_tugas->id]) }}">{{ $jawaban_tugas->file_upload_jawab }}</a>
+                                                   <div class="d-flex flex-wrap justify-content-between">
+                                                       <div class="old_file">
+                                                           <p style="margin-bottom: -5px">File Jawaban Kamu</p>
+                                                           <a class="d-block mb-3 mt-2 btn btn-sm btn-primary"
+                                                              href="{{ route('student.download.jawaban.tugas', ['id_jawaban' => $jawaban_tugas->id]) }}">
+                                                               {{ $jawaban_tugas->file_upload_jawab }}
+                                                           </a>
+                                                       </div>
+                                                       <div class="nilai">
+                                                           <p class="fw-bold ms-3 mt-3" style="letter-spacing: 0.4px;margin-bottom: -5px;font-size: 18px;">
+                                                               Nilai : @if($jawaban_tugas->nilai != null) {{ $jawaban_tugas->nilai }} @else <span class="text-danger" style="font-size: 14px;">Belum ada Nilai</span> @endif
+                                                           </p>
+                                                       </div>
+                                                   </div>
                                                 @endif
                                             @endforeach
 
@@ -196,9 +208,11 @@
                            <div class="card p-3 mb-2 mt-2">
                                <h3 class="mb-3">{{ $item->judul_ujian }}</h3>
                                <p class="card-subtitle mb-2 mt-2 text-justify">{{ $item->description }}</p>
-                               @if($item->file_upload_tugas != null)
-                                   <a class="mt-3" href="{{ route('student.download.ujian', ['file_name' => $item->name_file_ujian, 'id_guru' => $datakelas->guru_id, 'id_kelas' => $datakelas->id]) }}">Download Berkas Tugas</a>
+
+                               @if($item->nama_file_ujian != null)
+                                   <a class="mt-3" href="{{ route('student.download.ujian', ['id_ujian' => $item->id]) }}">Download Berkas Tugas</a>
                                @endif
+
                                <hr class="mt-3 mb-3">
 
                                <form action="{{ route('student.upload.answer.ujian') }}" method="post" style="margin-top: -25px;" enctype="multipart/form-data">
@@ -210,11 +224,24 @@
                                        <input type="hidden" name="id_ujian" value="{{ $item->id }}" style="display: none;">
 
                                        @foreach($item->jawaban_ujian as $jawaban_ujian)
-                                           @if(!empty($jawaban_ujian->nama_file_jawaban_ujian))
+                                           @if(!empty($jawaban_ujian->nama_file_jawaban_ujian) AND $jawaban_ujian->siswa_id == Auth::user()->id)
                                                <input type="hidden" name="old_file" value="{{ $jawaban_ujian->nama_file_jawaban_ujian }}" style="display: none;">
 
-                                               <p style="margin-bottom: -5px">File Jawaban Kamu</p>
-                                               <a class="d-block mb-3" href="{{ route('student.download.jawaban.ujian', ['id_jawaban' => $jawaban_ujian->id]) }}">{{ $jawaban_ujian->nama_file_jawaban_ujian }}</a>
+                                               <div class="d-flex flex-wrap justify-content-between">
+                                                   <div class="old_file">
+                                                       <p style="margin-bottom: -5px">File Jawaban Kamu</p>
+                                                       <a class="d-block mb-3 mt-2 btn btn-sm btn-primary"
+                                                          href="{{ route('student.download.jawaban.ujian', ['id_jawaban' => $jawaban_ujian->id]) }}">
+                                                           {{ $jawaban_ujian->nama_file_jawaban_ujian }}
+                                                       </a>
+                                                   </div>
+
+                                                   <div class="nilai">
+                                                       <p class="fw-bold ms-3 mt-3" style="letter-spacing: 0.4px;margin-bottom: -5px;font-size: 18px;">
+                                                           Nilai : @if($jawaban_ujian->nilai != null) {{ $jawaban_ujian->nilai }} @else <span class="text-danger" style="font-size: 14px;">Belum ada Nilai</span> @endif
+                                                       </p>
+                                                   </div>
+                                               </div>
                                            @endif
                                        @endforeach
 

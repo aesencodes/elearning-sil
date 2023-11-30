@@ -53,7 +53,7 @@ Route::prefix('dashboard')->group(function () {
     // Download File
     Route::get('download/tugas/{file_name}/{id_kelas}/{id_guru}',           [TugasController::class, 'downloadFileTugas'])->name('teacher.download.tugas');
     Route::get('download/materi/{file_name}/{id_kelas}/{id_guru}',          [TeacherClassController::class, 'downloadFileMateri'])->name('teacher.download.materi');
-    Route::get('download/ujian/{file_name}/{id_kelas}/{id_guru}',           [UjianController::class, 'downloadFileMateri'])->name('student.download.ujian');
+    Route::get('download/ujian/{id_ujian}',                                 [UjianController::class, 'downloadFileUjian'])->name('student.download.ujian');
 
     // Download file Jawaban
     Route::get('download/jawaban/tugas/{id_jawaban}',                      [StudentClassController::class, 'downloadJawabanTugas'])->name('student.download.jawaban.tugas');
@@ -99,6 +99,8 @@ Route::prefix('dashboard')->group(function () {
             Route::get('update/tugas/{id}',                         [TugasController::class, 'viewUpdateTugas'])->name('teacher.update.tugas');
             Route::post('update/tugas/',                            [TugasController::class, 'updateTugas'])->name('teacher.update.tugas.post');
             Route::delete('delete-tugas/{id}',                      [TugasController::class, 'destroyTugas'])->name('teacher.delete.tugas');
+            Route::get('list/answer/task/{id_kelas}/{id_tugas}',    [TugasController::class, 'listJawabanTugas'])->name('teacher.list.jawaban.tugas');
+            Route::post('upload/nilai/tugas',                       [TugasController::class, 'uploadNilaiTugas'])->name('teacher.nilai.tugas.post');
 
             // Materi
             Route::get('create/materi/{id}/{guru_id}',          [MateriController::class, 'create'])->name('teacher.create.materi');
@@ -108,11 +110,13 @@ Route::prefix('dashboard')->group(function () {
             Route::delete('delete-materi/{id}',                 [MateriController::class, 'destroy'])->name('teacher.delete.materi');
 
             // Ujian
-            Route::get('create/ujian/{id_kelas}/{id_guru}',     [TeacherUjianController::class, 'viewCreateUjian'])->name('teacher.create.ujian');
-            Route::post('create-ujian',                         [TeacherUjianController::class, 'createUjian'])->name('teacher.create.ujian.post');
-            Route::get('update/ujian/{id}',                     [TeacherUjianController::class, 'viewUpdateUjian'])->name('teacher.update.ujian');
-            Route::post('update/ujian/',                        [TeacherUjianController::class, 'updateUjian'])->name('teacher.update.ujian.post');
-            Route::delete('delete-ujain/{id}',                  [TeacherUjianController::class, 'destroyUjian'])->name('teacher.delete.ujian');
+            Route::get('create/ujian/{id_kelas}/{id_guru}',         [TeacherUjianController::class, 'viewCreateUjian'])->name('teacher.create.ujian');
+            Route::post('create-ujian',                             [TeacherUjianController::class, 'createUjian'])->name('teacher.create.ujian.post');
+            Route::get('update/ujian/{id}',                         [TeacherUjianController::class, 'viewUpdateUjian'])->name('teacher.update.ujian');
+            Route::post('update/ujian/',                            [TeacherUjianController::class, 'updateUjian'])->name('teacher.update.ujian.post');
+            Route::delete('delete-ujain/{id}',                      [TeacherUjianController::class, 'destroyUjian'])->name('teacher.delete.ujian');
+            Route::get('list/answer/test/{id_kelas}/{id_ujian}',    [TeacherUjianController::class, 'listJawabanUjian'])->name('teacher.list.jawaban.ujian');
+            Route::post('upload/nilai/ujian',                       [TeacherUjianController::class, 'uploadNilaiUjian'])->name('teacher.nilai.ujian.post');
 
         });
     });

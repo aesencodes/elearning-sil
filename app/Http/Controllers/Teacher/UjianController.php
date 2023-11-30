@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
+use App\Models\tbl_jawaban_tugas;
+use App\Models\tbl_jawaban_ujian;
 use App\Models\tbl_ujian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -104,4 +106,37 @@ class UjianController extends Controller
             return redirect()->back()->with('success', 'Berhasil Menghapus Ujian');
         } return redirect()->back()->with('danger', 'Whoops!! Terjadi Kesalahan, Silakan coba kembali.');
     }
+
+    public function listJawabanUjian($id_kelas, $id_ujian) {
+
+        $listjawaban = tbl_jawaban_ujian::where([
+            ['ujian_id', $id_ujian],
+            ['kelas_id', $id_kelas],
+        ])->with('siswa');
+
+        return view('pages.teacher.ujian.list_jawaban', [
+            'listJawaban'   => $listjawaban->get(),
+            'countJawaban'  => $listjawaban->count(),
+            'id_kelas'      => $id_kelas,
+        ]);
+    }
+
+    public function uploadNilaiUjian(Request $req) {
+        $req->validate([
+            'nilai'       => 'required',
+        ]);
+
+        $updateNilai = tbl_jawaban_ujian::where([
+            ['ujian_id', $req->id_ujian],
+            ['kelas_id', $req->id_kelas],
+            ['siswa_id', $req->id_siswa],
+        ])->update([
+            'nilai' => $req->nilai,
+        ]);
+
+        if ($updateNilai) {
+            return redirect()->back()->with('success', 'Berhasil Upload Nilai');
+        } return redirect()->back()->with('danger', 'Whoops!! Terjadi kesalahan, Silakan coba kembali.');
+    }
+
 }

@@ -54,7 +54,7 @@ class ClassController extends Controller
     }
 
     public function viewDetailClass($id_class){
-        $dataClass  = tbl_kelas::where('id', $id_class)->first();
+        $dataClass  = tbl_kelas::findOrFail($id_class);
         $dataMateri = tbl_materi::where('kelas_id', $id_class)->orderBy('created_at', 'desc')->with('comment_materi')->get();
         $dataTugas  = tbl_tugas::where('id_kelas', $id_class)->orderBy('created_at', 'desc')->with('comment_tugas')->get();
         $dataUjian  = tbl_ujian::where('kelas_id', $id_class)->orderBy('created_at', 'desc')->get();

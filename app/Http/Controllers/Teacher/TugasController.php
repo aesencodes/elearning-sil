@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Teacher;
 use App\Http\Controllers\Controller;
 use App\Models\tbl_comment_materi;
 use App\Models\tbl_comment_tugas;
+use App\Models\tbl_jawaban_tugas;
 use App\Models\tbl_kelas;
 use App\Models\tbl_tugas;
 use Illuminate\Http\Request;
@@ -141,6 +142,37 @@ class TugasController extends Controller
         if ($destroytugas) {
             return redirect()->back()->with('success', 'Berhasil Menghapus Tugas');
         } return redirect()->back()->with('danger', 'Whoops!! Terjadi Kesalahan, Silakan coba kembali.');
+    }
+
+    public function listJawabanTugas($id_kelas, $id_tugas) {
+        $listjawaban = tbl_jawaban_tugas::where([
+            ['id_tugas', $id_tugas],
+            ['id_kelas', $id_kelas],
+        ])->with('siswa');
+
+        return view('pages.teacher.tugas.list_jawaban', [
+            'listJawaban'   => $listjawaban->get(),
+            'countJawaban'  => $listjawaban->count(),
+            'id_kelas'      => $id_kelas,
+        ]);
+    }
+
+    public function uploadNilaiTugas(Request $req) {
+        $req->validate([
+            'nilai'       => 'required',
+        ]);
+
+        $updateNilai = tbl_jawaban_tugas::where([
+            ['id_tugas', $req->id_tugas],
+            ['id_kelas', $req->id_kelas],
+            ['id_siswa', $req->id_siswa],
+        ])->update([
+            'nilai' => $req->nilai,
+        ]);
+
+        if ($updateNilai) {
+            return redirect()->back()->with('success', 'Berhasil Upload Nilai');
+        } return redirect()->back()->with('danger', 'Whoops!! Terjadi kesalahan, Silakan coba kembali.');
     }
 
 }

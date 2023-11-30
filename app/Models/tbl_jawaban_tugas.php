@@ -32,4 +32,8 @@ class tbl_jawaban_tugas extends Model
     public function tugas() {
         return $this->belongsTo(tbl_tugas::class, 'tugas_id');
     }
+
+    public function siswa() {
+        return $this->belongsTo(User::class, 'id_siswa');
+    }
 }

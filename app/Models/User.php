@@ -89,4 +89,8 @@ class User extends Authenticatable
     public function jawaban_ujian() {
         return $this->hasMany(tbl_jawaban_ujian::class, 'siswa_id');
     }
+
+    public function jawaban_tugas() {
+        return $this->hasMany(tbl_jawaban_tugas::class, 'id_siswa');
+    }
 }

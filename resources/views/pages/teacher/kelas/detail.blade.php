@@ -173,9 +173,24 @@
                                    </div>
                                </div>
                                <p class="card-subtitle mb-2 mt-2 text-justify">{{ $item->deskripsi_tugas }}</p>
-                               @if($item->file_upload_tugas != null)
-                                   <a class="mt-3" href="{{ route('teacher.download.tugas', ['file_name' => $item->file_upload_tugas, 'id_guru' => $datakelas->guru_id, 'id_kelas' => $datakelas->id]) }}">Download Berkas Tugas</a>
-                               @endif
+
+                               {{-- Link Download file & list pengumpulan tugas --}}
+                               <div class="d-flex flex-wrap">
+                                   @if($item->file_upload_tugas != null)
+                                       <div class="me-3">
+                                           <a class="mt-3 btn btn-sm btn-primary" style=""
+                                              href="{{ route('teacher.download.tugas', ['file_name' => $item->file_upload_tugas, 'id_guru' => $datakelas->guru_id, 'id_kelas' => $datakelas->id]) }}">
+                                               Download Berkas Tugas
+                                           </a>
+                                       </div>
+                                   @endif
+                                   <div class="me-3">
+                                       <a class="mt-3 btn btn-sm btn-primary" style=""
+                                          href="{{ route('teacher.list.jawaban.tugas', ['id_kelas' => $datakelas->id, 'id_tugas' => $item->id]) }}">
+                                           Daftar Pengumpulan Tugas
+                                       </a>
+                                   </div>
+                               </div>
 
                                <hr class="mt-2 mb-3">
 
@@ -251,9 +266,21 @@
 
                                <h6 class="casrd-subtitle mb-2 text-justify">{{ $item->description }}</h6>
 
-                               @if($item->nama_file_ujian != null)
-                                   <a class="mt-3" href="{{ route('student.download.ujian', ['file_name' => $item->nama_file_ujian, 'id_guru' => $datakelas->guru_id, 'id_kelas' => $datakelas->id]) }}">Download Berkas Materi</a>
-                               @endif
+                               <div class="d-flex flex-wrap">
+                                   @if($item->nama_file_ujian != null)
+                                       <a class="mt-3 me-3 btn btn-sm btn-primary"
+                                          href="{{ route('student.download.ujian', ['id_ujian' => $item->id]) }}">
+                                           Download Berkas Materi
+                                       </a>
+                                   @endif
+
+                                   <div class="me-3">
+                                       <a class="mt-3 btn btn-sm btn-primary" style=""
+                                          href="{{ route('teacher.list.jawaban.ujian', ['id_kelas' => $item->kelas_id, 'id_ujian' => $item->id]) }}">
+                                           Daftar Pengumpulan Ujian
+                                       </a>
+                                   </div>
+                               </div>
                            </div>
                        @empty
                            <div class="card mb-2 mt-4 bg-danger">

@@ -67,4 +67,11 @@ class UjianController extends Controller
         $path = 'public/' . $dataJawaban->kelas_id . '/ujian/jawaban/' . $dataJawaban->siswa_id . '/' . $dataJawaban->nama_file_jawaban_ujian;
         return Storage::download($path);
     }
+
+    public function downloadFileUjian($id_ujian){
+        $dataUjian = tbl_ujian::where('id', $id_ujian)->first();
+        $path = 'public/' . $dataUjian->guru_id .'/'. $dataUjian->kelas_id . '/ujian/' . $dataUjian->nama_file_ujian;
+
+        return Storage::download($path);
+    }
 }
