@@ -61,7 +61,7 @@ Route::prefix('dashboard')->group(function () {
 
     //comment
     Route::post('comment-materi',                       [MateriController::class, 'comment_materi'])->name('send.comment.materi');
-    Route::post('comment-tugas',                        [TugasController::class, 'comment_tugas'])->name('send.commen   t.tugas');
+    Route::post('comment-tugas',                        [TugasController::class, 'comment_tugas'])->name('send.comment.tugas');
 
     Route::middleware(['isStudent'])->group(function () {
         route::prefix('student')->group(function () {
